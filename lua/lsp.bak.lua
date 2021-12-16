@@ -14,33 +14,34 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 -- symbols for autocomplete
-vim.lsp.protocol.CompletionItemKind = {
-  "   (Text) ",
-  "   (Method)",
-  "   (Function)",
-  "   (Constructor)",
-  " ﴲ  (Field)",
-  "[] (Variable)",
-  "   (Class)",
-  " ﰮ  (Interface)",
-  "   (Module)",
-  " 襁 (Property)",
-  "   (Unit)",
-  "   (Value)",
-  " 練 (Enum)",
-  "   (Keyword)",
-  "   (Snippet)",
-  "   (Color)",
-  "   (File)",
-  "   (Reference)",
-  "   (Folder)",
-  "   (EnumMember)",
-  " ﲀ  (Constant)",
-  " ﳤ  (Struct)",
-  "   (Event)",
-  "   (Operator)",
-  "   (TypeParameter)"
-}
+-- vim.lsp.protocol.CompletionItemKind = {
+--   "   (Text) ",
+--   "   (Method)",
+--   "   (Function)",
+--   "   (Constructor)",
+--   " ﴲ  (Field)",
+--   "[] (Variable)",
+--   "   (Class)",
+--   " ﰮ  (Interface)",
+--   "   (Module)",
+--   " 襁 (Property)",
+--   "   (Unit)",
+--   "   (Value)",
+--   " 練 (Enum)",
+--   "   (Keyword)",
+--   "   (Snippet)",
+--   "   (Color)",
+--   "   (File)",
+--   "   (Reference)",
+--   "   (Folder)",
+--   "   (EnumMember)",
+--   " ﲀ  (Constant)",
+--   " ﳤ  (Struct)",
+--   "   (Event)",
+--   "   (Operator)",
+--   "   (TypeParameter)"
+-- }
+
 ---@diagnostic disable-next-line: unused-local
 local function documentHighlight(client, bufnr)
   -- Set autocommands conditional on server_capabilities

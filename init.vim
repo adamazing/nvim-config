@@ -27,18 +27,18 @@ endif
 
 syntax enable
 
+set icm=split
 set cmdheight=2
 set colorcolumn=150
 set expandtab
-" set guifont=CaskaydiaCove\ Nerd\ Font\ Mono
-" set guifont=FiraCode\ Nerd\ Font\ Mono:h14
+set guifont=CaskaydiaCove\ Nerd\ Font\ Mono
 set ignorecase
 set mouse=nv
 set noshowmode
 set noswapfile
 set nu
-set nowrap
 set rnu
+set nowrap
 set shortmess+=c
 set signcolumn=yes
 set smartindent
@@ -46,9 +46,12 @@ set tabstop=2 softtabstop=0 shiftwidth=2 smarttab
 set updatetime=50
 set virtualedit=block
 set fillchars=fold:\ | set foldtext=CustomFold()
+set foldcolumn=1
+set completeopt=menu,menuone,noselect
+
 
 call plug#begin('~/.config/nvim/plugged')
-
+" Specify Plugins
 " Sensible default
 Plug 'tpope/vim-sensible'
 
@@ -83,12 +86,25 @@ Plug 'folke/twilight.nvim'
 
 Plug 'tpope/vim-unimpaired'
 
+" Plug 'onsails/lspkind-nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 " Plug 'simrat39/rust-tools.nvim'
+Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'glepnir/lspsaga.nvim'
 
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+
+Plug 'mechatroner/rainbow_csv'
+
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
@@ -105,6 +121,10 @@ Plug 'nvim-telescope/telescope.nvim'
 
 
 call plug#end()
+
+function! CustomFold()
+  return printf('    %d lines -[ %s',v:foldend - v:foldstart + 1, getline(v:foldstart))
+endfunction
 
 highlight ColorColumn ctermbg=grey guibg=grey
 augroup vimrc_autocmds
@@ -123,29 +143,29 @@ colo gruvbox
 let g:neovide_cursor_vfx_mode = "railgun"
 let g:neovide_cursor_antialiasing=v:true
 
-let g:nvim_tree_auto_open = 1
-let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
+" let g:nvim_tree_auto_open = 1
+" let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
 let g:nvim_tree_special_files = [ 'README.md', 'Makefile', 'MAKEFILE' ] " List of filenames that gets highlighted with NvimTreeSpecialFile
 let g:nvim_tree_show_icons = {
     \ 'git': 1,
     \ 'folders': 1,
     \ 'files': 1,
     \ }
-let g:nvim_tree_lsp_diagnostics = 1
-let g:nvim_tree_width_allow_resize  = 1
-let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
+" let g:nvim_tree_lsp_diagnostics = 1
+" let g:nvim_tree_width_allow_resize  = 1
+" let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
 
 let g:vimspector_enable_mappings = 'HUMAN'
 
 nnoremap <leader>t :NvimTreeToggle<CR>
 nnoremap <C-bslash> :NvimTreeFindFile<CR>
 
+" Puts the absolute path to the current file into the system clipboard
 nnoremap <Leader>fp :let @+=expand('%:p')<CR>
 
 let g:rainbow_active=1
 
-" let g:ruby_host_prog='~/.rbenv/shims/neovim-ruby-host'
-let g:ruby_host_prog='/usr/local/bin/neovim-ruby-host'
+let g:ruby_host_prog='asdf exec neovim-ruby-host'
 
 " function which trims trailing whitespace
 fun! TrimWhitespace()
@@ -153,10 +173,6 @@ fun! TrimWhitespace()
   keeppattern %s/\s\+$//e
   call winrestview(l:save)
 endfun
-
-function! CustomFold()
-  return printf('   %6-d%s', v:foldend - v:foldstart + 1, getline(v:foldstart))
-endfunction
 
 augroup AJH
   autocmd!
@@ -177,9 +193,16 @@ augroup highlight_yank
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
+inoremap ;; <Esc>
+vnoremap ;; <Esc>
 inoremap jk <Esc>
 vnoremap jk <Esc>
+inoremap <Leader>; ;
 
+" vim maximiser
+nnoremap <silent><Leader>z :MaximizerToggle<CR>
+vnoremap <silent><Leader>z :MaximizerToggle<CR>gv
+inoremap <silent><Leader>z <C-o>:MaximizerToggle<CR>
 
 nnoremap <leader>] :vertical resize +5<CR>
 nnoremap <leader>[ :vertical resize -5<CR>
@@ -189,12 +212,12 @@ nnoremap <leader>- :res -5<CR>
 nnoremap <silent> <leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><leader>l
 
 " LSPSaga Mappings
-nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
-nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
-vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
-nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
-nnoremap <silent> gr <cmd>lua require('lspsaga.rename').rename()<CR>
-nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
+" nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+" nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
+" vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
+" nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
+" nnoremap <silent> gr <cmd>lua require('lspsaga.rename').rename()<CR>
+" nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
 
 " Trouble Keymappings
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
@@ -223,8 +246,23 @@ xmap <leader>di <Plug>VimspectorBalloonEval
 
 let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode-node-debug2']
 
+" Treesitter playground query bindings
+nnoremap <leader>tpg :TSPlaygroundToggle<CR>
+nnoremap <leader>ts :TSHighlightCapturesUnderCursor<CR>
+
+
 lua <<EOF
-  require("lsp")
+  require'nvim-tree'.setup {
+    update_to_buf_dir = {
+      enable = true,
+      auto_open = true,
+    },
+    view = {
+      lsp_diagnostics = true,
+    }
+  }
+
+  require("lang")
   require("treesitter")
   require("statusbar")
   require("completion")
