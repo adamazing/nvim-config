@@ -62,6 +62,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-projectionist'
 
 " Color schemes
 Plug 'rktjmp/lush.nvim' " Required by gruvbox.nvim
@@ -84,11 +86,17 @@ Plug 'folke/lsp-colors.nvim'
 Plug 'folke/trouble.nvim'
 Plug 'folke/twilight.nvim'
 
+Plug 'tpope/vim-obsession'
+Plug 'dhruvasagar/vim-prosession'
+
+Plug 'vim-test/vim-test'
+
 Plug 'tpope/vim-unimpaired'
 
 " Plug 'onsails/lspkind-nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'kabouzeid/nvim-lspinstall'
+Plug 'williamboman/nvim-lsp-installer'
+
 " Plug 'simrat39/rust-tools.nvim'
 Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -101,6 +109,8 @@ Plug 'glepnir/lspsaga.nvim'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
+Plug 'rmagatti/auto-session'
+
 Plug 'mechatroner/rainbow_csv'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -112,8 +122,6 @@ Plug 'David-Kunz/treesitter-unit'
 Plug 'p00f/nvim-ts-rainbow'
 
 Plug 'windwp/nvim-autopairs'
-
-" Plug 'codota/tabnine-vim'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -155,13 +163,36 @@ let g:nvim_tree_show_icons = {
 " let g:nvim_tree_width_allow_resize  = 1
 " let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
 
+
+" vim-projectionist settings
+ let g:projectionist_heuristics = {
+  \ ".rubocop.yml|Gemfile|.rspec": {
+    \   "lib/external/*.rb": {
+    \     "alternate": "spec/external/{basename}_spec.rb",
+    \     "dispatch": "rspec spec/external/{basename}_spec.rb"
+    \   },
+    \   "spec/external/*_spec.rb": {"alternate": "lib/external/{}.rb"},
+    \   "app/*.rb": {"alternate": "spec/{}_spec.rb"},
+    \   "spec/*_spec.rb": {
+      \   "alternate": "app/{}.rb",
+      \   "dispatch":  "rspec {file}"
+      \ }
+  \ }}
+
+
 let g:vimspector_enable_mappings = 'HUMAN'
+
+" vim-test settings
+let test#strategy = "dispatch"
 
 nnoremap <leader>t :NvimTreeToggle<CR>
 nnoremap <C-bslash> :NvimTreeFindFile<CR>
 
 " Puts the absolute path to the current file into the system clipboard
 nnoremap <Leader>fp :let @+=expand('%:p')<CR>
+
+" Puts the relative path to the current file into the system clipboard
+nnoremap <Leader>fn :let @+=expand('%:t')<CR>
 
 let g:rainbow_active=1
 
@@ -199,6 +230,13 @@ inoremap jk <Esc>
 vnoremap jk <Esc>
 inoremap <Leader>; ;
 
+" vim-test mappings
+nnoremap <Leader>rT :TestFile<CR>
+nnoremap <Leader>rt :TestNearest<CR>
+nnoremap <Leader>rl :TestLast<CR>
+nnoremap <Leader>ra :TestSuite<CR>
+nnoremap <Leader>rV :TestVisit<CR>
+
 " vim maximiser
 nnoremap <silent><Leader>z :MaximizerToggle<CR>
 vnoremap <silent><Leader>z :MaximizerToggle<CR>gv
@@ -212,12 +250,20 @@ nnoremap <leader>- :res -5<CR>
 nnoremap <silent> <leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><leader>l
 
 " LSPSaga Mappings
-" nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
-" nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
-" vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
-" nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
-" nnoremap <silent> gr <cmd>lua require('lspsaga.rename').rename()<CR>
-" nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
+" -- lsp provider to find the cursor word definition and reference
+nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
+vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
+" -- show hover doc
+nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+" -- scroll down hover doc or scroll in definition preview
+nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
+nnoremap <silent> gr <cmd>lua require('lspsaga.rename').rename()<CR>
+nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
+nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
 
 " Trouble Keymappings
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
@@ -228,7 +274,8 @@ nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap <silent>gr <cmd>TroubleToggle lsp_references<cr>
 
 " Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>ff <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>
+" nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
@@ -260,6 +307,11 @@ lua <<EOF
     view = {
       lsp_diagnostics = true,
     }
+  }
+
+  require('auto-session').setup {
+    log_level = 'info',
+    auto_session_suppress_dirs = {'~/', '~/Projects'}
   }
 
   require("lang")
