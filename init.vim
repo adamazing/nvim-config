@@ -163,23 +163,6 @@ let g:nvim_tree_show_icons = {
 " let g:nvim_tree_width_allow_resize  = 1
 " let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
 
-
-" vim-projectionist settings
- let g:projectionist_heuristics = {
-  \ ".rubocop.yml|Gemfile|.rspec": {
-    \   "lib/external/*.rb": {
-    \     "alternate": "spec/external/{basename}_spec.rb",
-    \     "dispatch": "rspec spec/external/{basename}_spec.rb"
-    \   },
-    \   "spec/external/*_spec.rb": {"alternate": "lib/external/{}.rb"},
-    \   "app/*.rb": {"alternate": "spec/{}_spec.rb"},
-    \   "spec/*_spec.rb": {
-      \   "alternate": "app/{}.rb",
-      \   "dispatch":  "rspec {file}"
-      \ }
-  \ }}
-
-
 let g:vimspector_enable_mappings = 'HUMAN'
 
 " vim-test settings
