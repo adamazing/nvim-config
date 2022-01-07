@@ -47,7 +47,7 @@ set updatetime=50
 set virtualedit=block
 set fillchars=fold:\ | set foldtext=CustomFold()
 set foldcolumn=1
-set completeopt=menu,menuone,noselect
+set completeopt=menu,menuone,preview,noinsert,noselect
 
 
 call plug#begin('~/.config/nvim/plugged')
@@ -104,7 +104,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'glepnir/lspsaga.nvim'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
@@ -235,18 +235,20 @@ nnoremap <silent> <leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR>
 
 " LSPSaga Mappings
 " -- lsp provider to find the cursor word definition and reference
-nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
-nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
-vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
+" nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+" nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
+" vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
 " -- show hover doc
-nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+" nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 " -- scroll down hover doc or scroll in definition preview
-nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
-nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
-nnoremap <silent> gr <cmd>lua require('lspsaga.rename').rename()<CR>
-nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
-nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+" nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+" nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
+" nnoremap <silent> gr <cmd>lua require('lspsaga.rename').rename()<CR>
+" nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
+
+
+nnoremap <silent> [d <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]d <cmd>lua vim.diagnostic.goto_next()<CR>
 
 
 " Trouble Keymappings
@@ -298,10 +300,10 @@ lua <<EOF
     auto_session_suppress_dirs = {'~/', '~/Projects'}
   }
 
+  require("completion")
   require("lang")
   require("treesitter")
   require("statusbar")
-  require("completion")
   require("telescope_integration")
   require("prettiness")
 --  require("keymaps")
