@@ -122,11 +122,12 @@ Plug 'David-Kunz/treesitter-unit'
 Plug 'p00f/nvim-ts-rainbow'
 
 Plug 'windwp/nvim-autopairs'
+Plug 'kosayoda/nvim-lightbulb'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 call plug#end()
 
@@ -253,8 +254,8 @@ nnoremap <silent> ]d <cmd>lua vim.diagnostic.goto_next()<CR>
 
 " Trouble Keymappings
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
-nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
-nnoremap <leader>xd <cmd>TroubleToggle lsp_document_diagnostics<cr>
+nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
+nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
 nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap <silent>gr <cmd>TroubleToggle lsp_references<cr>

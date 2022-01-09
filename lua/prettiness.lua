@@ -1,4 +1,3 @@
----@diagnostic disable: undefined-global
 require('nvim-web-devicons').setup {
   -- your personal icons can go here (to override)
   -- DevIcon will be appended to `name`
@@ -21,9 +20,7 @@ require("twilight").setup {
   },
 }
 
--- require('lualine').setup {
---   -- options = { theme = 'gruvbox' }
--- }
-
-
 vim.api.nvim_set_keymap('n','<Leader>tw',':Twilight<CR>', {noremap = true, silent = true})
+
+-- show a light-bulb whenever a code action is available
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]

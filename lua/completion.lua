@@ -103,22 +103,17 @@ cmp.setup({
     end,
     -- Accept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = false })
   },
   sources = cmp.config.sources({
-    { name = 'path' },
-    { name = 'nvim_lsp' },
+    { name = 'signature_help'},
     { name = 'cmp_tabnine' },
-    { name = 'vsnip' },-- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-  }, {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
     { name = 'buffer' },
+    { name = 'path' },
   })
 })
-
--- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
   sources = {
     { name = 'buffer' }
