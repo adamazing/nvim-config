@@ -27,6 +27,7 @@ endif
 
 syntax enable
 
+" --  `set` statements
 set icm=split
 set cmdheight=2
 set colorcolumn=150
@@ -233,20 +234,6 @@ nnoremap <leader>= :res +5<CR>
 nnoremap <leader>- :res -5<CR>
 
 nnoremap <silent> <leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><leader>l
-
-" LSPSaga Mappings
-" -- lsp provider to find the cursor word definition and reference
-" nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
-" nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
-" vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
-" -- show hover doc
-" nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
-" -- scroll down hover doc or scroll in definition preview
-" nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
-" nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
-" nnoremap <silent> gr <cmd>lua require('lspsaga.rename').rename()<CR>
-" nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
-
 
 nnoremap <silent> [d <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> ]d <cmd>lua vim.diagnostic.goto_next()<CR>
