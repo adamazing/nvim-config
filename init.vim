@@ -28,27 +28,27 @@ endif
 syntax enable
 
 " --  `set` statements
-set icm=split
 set cmdheight=2
 set colorcolumn=150
+set completeopt=menu,menuone,preview,noinsert,noselect
 set expandtab
+set fillchars=fold:\ | set foldtext=CustomFold()
+set foldcolumn=1
 set guifont=CaskaydiaCove\ Nerd\ Font\ Mono
+set icm=split
 set ignorecase
 set mouse=nv
 set noshowmode
 set noswapfile
+set nowrap
 set nu
 set rnu
-set nowrap
 set shortmess+=c
 set signcolumn=yes
 set smartindent
 set tabstop=2 softtabstop=0 shiftwidth=2 smarttab
 set updatetime=50
 set virtualedit=block
-set fillchars=fold:\ | set foldtext=CustomFold()
-set foldcolumn=1
-set completeopt=menu,menuone,preview,noinsert,noselect
 
 
 call plug#begin('~/.config/nvim/plugged')
