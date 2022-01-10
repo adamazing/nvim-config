@@ -87,9 +87,6 @@ Plug 'folke/lsp-colors.nvim'
 Plug 'folke/trouble.nvim'
 Plug 'folke/twilight.nvim'
 
-Plug 'tpope/vim-obsession'
-Plug 'dhruvasagar/vim-prosession'
-
 Plug 'vim-test/vim-test'
 
 Plug 'tpope/vim-unimpaired'
@@ -109,8 +106,6 @@ Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
-
-Plug 'rmagatti/auto-session'
 
 Plug 'mechatroner/rainbow_csv'
 
@@ -273,28 +268,28 @@ nnoremap <leader>ts :TSHighlightCapturesUnderCursor<CR>
 
 
 lua <<EOF
-  require'nvim-tree'.setup {
-    update_to_buf_dir = {
-      enable = true,
-      auto_open = true,
-    },
-    view = {
-      lsp_diagnostics = true,
-    }
-  }
+  -- require'nvim-tree'.setup {
+  --   update_to_buf_dir = {
+  --     enable = true,
+  --     auto_open = true,
+  --   },
+  --   view = {
+  --     lsp_diagnostics = true,
+  --   }
+  -- }
 
-  require('auto-session').setup {
-    log_level = 'info',
-    auto_session_suppress_dirs = {'~/', '~/Projects'}
-  }
-
+--  require('auto-session').setup {
+--    log_level = 'info',
+--    auto_session_suppress_dirs = {'~/', '~/Projects'}
+--  }
+--
   require("completion")
   require("lang")
   require("treesitter")
   require("statusbar")
   require("telescope_integration")
   require("prettiness")
---  require("keymaps")
+  -- require("keymaps")
 EOF
 
 " lua <<EOF

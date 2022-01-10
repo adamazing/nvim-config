@@ -100,17 +100,17 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float({focusa
 
 
 -- -- Only in Nvim 0.6
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
- virtual_text = {
-   source = "if_many",  -- Or "always"
- }
-})
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+--  virtual_text = {
+--    source = "if_many",  -- Or "always"
+--  }
+-- })
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-  virtual_text = {
-    prefix = ' ', -- Could be '●', '▎', 'x'
-  }
-})
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+--   virtual_text = {
+--     prefix = ' ', -- Could be '●', '▎', 'x'
+--   }
+-- })
 
 local nvim_lsp = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
