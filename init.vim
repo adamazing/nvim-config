@@ -125,6 +125,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 
+Plug 'ThePrimeagen/vim-be-good'
+
 call plug#end()
 
 function! CustomFold()
