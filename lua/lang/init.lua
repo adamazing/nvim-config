@@ -150,6 +150,13 @@ local solargraph_settings = {
 nvim_lsp.solargraph.setup(solargraph_settings)
 
 
+-- Rust LSP
+local rustdev = {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+nvim_lsp.rust_analyzer.setup(rustdev)
+
 -- Lua LSP
 -- local sumneko_binary_path = vim.fn.exepath('lua-language-server')
 -- local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ':h:h:h')
