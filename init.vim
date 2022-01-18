@@ -125,6 +125,9 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 
+Plug 'aklt/plantuml-syntax'
+Plug 'scrooloose/vim-slumlord'
+
 Plug 'ThePrimeagen/vim-be-good'
 
 call plug#end()
@@ -270,15 +273,15 @@ nnoremap <leader>ts :TSHighlightCapturesUnderCursor<CR>
 
 
 lua <<EOF
-  -- require'nvim-tree'.setup {
-  --   update_to_buf_dir = {
-  --     enable = true,
-  --     auto_open = true,
-  --   },
-  --   view = {
-  --     lsp_diagnostics = true,
-  --   }
-  -- }
+  require'nvim-tree'.setup {
+    update_to_buf_dir = {
+      enable = true,
+      auto_open = true,
+    },
+    view = {
+      lsp_diagnostics = true,
+    }
+  }
 
 --  require('auto-session').setup {
 --    log_level = 'info',
