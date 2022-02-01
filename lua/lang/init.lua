@@ -78,7 +78,6 @@ local on_attach = function(client, bufnr)
 
 end
 
-
 -- -- Customizing how diagnostics are displayed
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   virtual_text = true,
@@ -100,11 +99,11 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float({focusa
 
 
 -- -- Only in Nvim 0.6
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
---  virtual_text = {
---    source = "if_many",  -- Or "always"
---  }
--- })
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+ virtual_text = {
+   source = "if_many",  -- Or "always"
+ }
+})
 
 -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 --   virtual_text = {
@@ -158,9 +157,6 @@ local rustdev = {
 nvim_lsp.rust_analyzer.setup(rustdev)
 
 -- Lua LSP
--- local sumneko_binary_path = vim.fn.exepath('lua-language-server')
--- local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ':h:h:h')
-
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
@@ -171,7 +167,8 @@ local luadev = {
   settings = {
     Lua = {
       runtime = {
-        version = 'LuaJIT',
+        version = 'Lua 5.3',
+        -- command = '~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server',
         path = runtime_path,
       },
       diagnostics = {

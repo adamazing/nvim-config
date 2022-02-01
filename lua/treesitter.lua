@@ -87,5 +87,7 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
+require('nvim-autopairs').setup{}
+
 vim.api.nvim_set_keymap('v', 'x', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
 vim.api.nvim_set_keymap('o', 'x', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
