@@ -116,6 +116,7 @@ Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'David-Kunz/treesitter-unit'
 Plug 'p00f/nvim-ts-rainbow'
+Plug 'RRethy/nvim-treesitter-endwise'
 
 Plug 'windwp/nvim-autopairs'
 Plug 'kosayoda/nvim-lightbulb'

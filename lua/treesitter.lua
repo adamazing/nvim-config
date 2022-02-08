@@ -9,6 +9,10 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   },
 
+  endwise= {
+    enable = true, -- endwise completion with TS for ruby
+  },
+
   highlight = { -- enable highlighting for all file types
     enable = true, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
   },
