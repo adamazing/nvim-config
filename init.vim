@@ -129,6 +129,8 @@ Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'aklt/plantuml-syntax'
 Plug 'scrooloose/vim-slumlord'
 
+Plug 'simrat39/symbols-outline.nvim' " Shows symbol outline of current file
+
 Plug 'ThePrimeagen/vim-be-good'
 
 call plug#end()
@@ -138,9 +140,17 @@ function! CustomFold()
 endfunction
 
 highlight ColorColumn ctermbg=grey guibg=grey
+fun! PanicOverLength()
+  " Don't show red bg on overlength for these file types
+  if &ft =~ 'csv'
+    return
+  endif
+  match OverLength /\%150v.*/
+endfun
+
 augroup vimrc_autocmds
     autocmd InsertLeave * highlight OverLength ctermbg=red guibg=red
-    autocmd InsertLeave * match OverLength /\%150v.*/
+    autocmd InsertLeave * call PanicOverLength()
 augroup END
 
 if has('termguicolors')
