@@ -50,7 +50,6 @@ set tabstop=2 softtabstop=0 shiftwidth=2 smarttab
 set updatetime=50
 set virtualedit=block
 
-
 call plug#begin('~/.config/nvim/plugged')
 " Specify Plugins
 " Sensible default
@@ -235,6 +234,8 @@ nnoremap <leader>- :res -5<CR>
 
 nnoremap <silent> <leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><leader>l
 
+nnoremap <silent> <leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+
 nnoremap <silent> [d <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> ]d <cmd>lua vim.diagnostic.goto_next()<CR>
 
@@ -289,8 +290,8 @@ lua <<EOF
 --  }
 --
   require("completion")
-  require("lang")
   require("treesitter")
+  require("lang")
   require("statusbar")
   require("telescope_integration")
   require("prettiness")
