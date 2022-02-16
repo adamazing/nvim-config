@@ -184,3 +184,19 @@ local luadev = {
   }
 }
 nvim_lsp.sumneko_lua.setup(luadev)
+
+
+local lsp_installer = require("nvim-lsp-installer")
+local ignore_servers = {
+  "sumneko_lua",
+  "rust_analyzer",
+  "solargraph",
+  "vimls"
+}
+lsp_installer.on_server_ready(function (server)
+  local opts = {}
+
+  if ignore_servers[server.name] == nil then
+    server:setup(opts)
+  end
+end)
