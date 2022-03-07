@@ -117,11 +117,15 @@ Plug 'David-Kunz/treesitter-unit'
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'RRethy/nvim-treesitter-endwise'
 
+" Requires plenary and nui.nvim
+Plug 'bennypowers/nvim-regexplainer'
+
 Plug 'windwp/nvim-autopairs'
 Plug 'kosayoda/nvim-lightbulb'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 
@@ -293,6 +297,15 @@ lua <<EOF
     view = {
       lsp_diagnostics = true,
     }
+  }
+
+  -- not shown: defaults
+  require'regexplainer'.setup {
+    -- automatically show the explainer when the cursor enters a regexp
+    auto = true,
+    mappings = {
+      show = 'gR',
+    },
   }
 
 --  require('auto-session').setup {
