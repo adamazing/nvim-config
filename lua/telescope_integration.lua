@@ -13,7 +13,7 @@ telescope.setup {
       require("telescope.themes").get_dropdown {
         --
       }
-    }
+    },
   },
   defaults = {
     mappings = {
