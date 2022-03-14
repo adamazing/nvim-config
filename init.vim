@@ -277,6 +277,9 @@ nnoremap <silent>gd :lua require'telescope.builtin'.lsp_definitions{}<cr>
 " get a list of implementations for word under cursor or jump to sole
 " implementation
 nnoremap <silent>gi :lua require'telescope.builtin'.lsp_implementations{}<cr>
+nnoremap <silent>K :lua vim.lsp.buf.hover()<cr>
+nnoremap <leader>ca :lua vim.lsp.buf.code_action()<cr>
+
 
 " Debug Bindings
 nmap <leader>dd :call vimspector#Launch()<CR>
