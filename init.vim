@@ -128,13 +128,12 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'nvim-telescope/telescope-symbols.nvim'
 
 Plug 'aklt/plantuml-syntax'
 Plug 'scrooloose/vim-slumlord'
 
 Plug 'simrat39/symbols-outline.nvim' " Shows symbol outline of current file
-
-Plug 'ThePrimeagen/vim-be-good'
 
 call plug#end()
 
@@ -269,8 +268,15 @@ nnoremap <leader>ff <cmd>lua require'telescope.builtin'.find_files({ find_comman
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" Search file changes (according to git)
+nnoremap <leader>fc <cmd>lua require'telescope.builtin'.git_status{}<cr>
+nnoremap <leader>fs <cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>
 
-nnoremap <leader>m :MaximizerToggle!<CR>
+" get a list of definitions or jump to a sole definition
+nnoremap <silent>gd :lua require'telescope.builtin'.lsp_definitions{}<cr>
+" get a list of implementations for word under cursor or jump to sole
+" implementation
+nnoremap <silent>gi :lua require'telescope.builtin'.lsp_implementations{}<cr>
 
 " Debug Bindings
 nmap <leader>dd :call vimspector#Launch()<CR>
@@ -303,9 +309,24 @@ lua <<EOF
   require'regexplainer'.setup {
     -- automatically show the explainer when the cursor enters a regexp
     auto = true,
-    mappings = {
-      show = 'gR',
+    popup = {
+      border = {
+        padding = { 1, 2},
+        style="rounded"
+      },
     },
+    narrative = {
+      separator = function(component)
+        local sep = '\n ';
+        if component.depth > 0 then
+          for _ = 1, component.depth do
+            sep = sep .. '> '
+          end
+        end
+        return sep
+      end
+    },
+    -- debug = true,
   }
 
 --  require('auto-session').setup {

@@ -16,7 +16,7 @@ require('nvim-web-devicons').setup {
 require("twilight").setup {
   dimming = {
     alpha = 0.15, -- amount of dimming
-    color = { "Normal", "#111111" }
+    -- color = { "Normal", "#111111" }
   },
 }
 
