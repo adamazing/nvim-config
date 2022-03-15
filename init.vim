@@ -68,8 +68,9 @@ Plug 'tpope/vim-projectionist'
 " Color schemes
 Plug 'rktjmp/lush.nvim' " Required by gruvbox.nvim
 Plug 'npxbr/gruvbox.nvim'
-
 Plug 'szw/vim-maximizer'
+
+Plug 'sangdol/mintabline.vim'
 
 " DAP Setup
 " Plug 'Pocco81/DAPInstall.nvim'
@@ -163,8 +164,10 @@ let g:gruvbox_contrast_light='hard'
 let g:gruvbox_contrast_dark='soft'
 colo gruvbox
 
-let g:neovide_cursor_vfx_mode = "railgun"
-let g:neovide_cursor_antialiasing=v:true
+for i in range(1,9)
+  exec 'nnoremap ' .. i .. ', ' .. i .. 'gt'
+endfor
+
 
 " let g:nvim_tree_auto_open = 1
 " let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
