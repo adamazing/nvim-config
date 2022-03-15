@@ -229,6 +229,11 @@ inoremap jk <Esc>
 vnoremap jk <Esc>
 inoremap <Leader>; ;
 
+" yank visual selection to tmux clipboard
+vnoremap <leader>tc y<cr>:call system("tmux load-buffer -", @0)<cr>
+" paste from tmux clipboard
+nnoremap <leader>tp :let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;
+
 " vim-test mappings
 nnoremap <Leader>rT :TestFile<CR>
 nnoremap <Leader>rt :TestNearest<CR>
