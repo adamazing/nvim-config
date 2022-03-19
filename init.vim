@@ -279,6 +279,7 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 " Search file changes (according to git)
 nnoremap <leader>fc <cmd>lua require'telescope.builtin'.git_status{}<cr>
 nnoremap <leader>fs <cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>
+inoremap <leader>fs <cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>
 
 " get a list of definitions or jump to a sole definition
 nnoremap <silent>gd :lua require'telescope.builtin'.lsp_definitions{}<cr>
