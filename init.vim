@@ -36,6 +36,10 @@ lua << EOF
     map('i', shortcut, command)
   end
 
+  function vmap(shortcut, command)
+    map('v', shortcut, command)
+  end
+
   nmap("<C-h>", "<C-w>h");
   nmap("<C-j>", "<C-w>j");
   nmap("<C-k>", "<C-w>k");
@@ -241,41 +245,54 @@ augroup highlight_yank
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
-inoremap ;; <Esc>
-vnoremap ;; <Esc>
-inoremap jk <Esc>
-vnoremap jk <Esc>
-inoremap <Leader>; ;
-
 " yank visual selection to tmux clipboard
 vnoremap <leader>tc y<cr>:call system("tmux load-buffer -", @0)<cr>
 " paste from tmux clipboard
 nnoremap <leader>tp :let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;
 
-" vim-test mappings
-nnoremap <Leader>rT :TestFile<CR>
-nnoremap <Leader>rt :TestNearest<CR>
-nnoremap <Leader>rl :TestLast<CR>
-nnoremap <Leader>ra :TestSuite<CR>
-nnoremap <Leader>rV :TestVisit<CR>
+lua << EOF
 
-" vim maximiser
-nnoremap <silent><Leader>z :MaximizerToggle<CR>
-vnoremap <silent><Leader>z :MaximizerToggle<CR>gv
-inoremap <silent><Leader>z <C-o>:MaximizerToggle<CR>
+  -- Escape mappings
+  imap(";;","<Esc>")
+  vmap(";;","<Esc>")
+  imap("jk","<Esc>")
+  vmap("jk","<Esc>")
+  imap("<Leader>;",";")
 
-nnoremap <leader>] :vertical resize +5<CR>
-nnoremap <leader>[ :vertical resize -5<CR>
-nnoremap <leader>= :res +5<CR>
-nnoremap <leader>- :res -5<CR>
+  -- vim-test mappings
+  nmap("<Leader>rT", ":TestFile<CR>")
+  nmap("<Leader>rt", ":TestNearest<CR>")
+  nmap("<Leader>rl", ":TestLast<CR>")
+  nmap("<Leader>ra", ":TestSuite<CR>")
+  nmap("<Leader>rV", ":TestVisit<CR>")
+
+  -- Maximizer (zoom pane)
+  nmap("<Leader>z", ":MaximizerToggle<CR>")
+  vmap("<Leader>z", ":MaximizerToggle<CR>gv")
+  imap("<Leader>z", "<C-o>:MaximizerToggle<CR>")
+
+  nmap("<Leader>]", ":vertical resize +5<CR>")
+  nmap("<Leader>[", ":vertical resize -5<CR>")
+  nmap("<Leader>=", ":resize +5<CR>")
+  nmap("<Leader>-", ":resize -5<CR>")
+
+  -- Toggle background between dark and light
+  nmap("<Leader>bg", ":let &background = ( &background == 'dark'? 'light' : 'dark' )<CR>")
+
+  nmap("[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+  nmap("]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+
+  nmap ("<leader>ff", "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>")
+  nmap ("<leader>fg", "<cmd>Telescope live_grep<cr>");
+  nmap ("<leader>fb", "<cmd>Telescope buffers<cr>");
+  nmap ("<leader>fh", "<cmd>Telescope help_tags<cr>");
+  -- Search file changes (according to git)
+  nmap ("<leader>fc", "<cmd>lua require'telescope.builtin'.git_status{}<cr>");
+  nmap ("<leader>fs", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>");
+  imap ("<leader>fs", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>");
+EOF
 
 nnoremap <silent> <leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><leader>l
-
-nnoremap <silent> <leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
-
-nnoremap <silent> [d <cmd>lua vim.diagnostic.goto_prev()<CR>
-nnoremap <silent> ]d <cmd>lua vim.diagnostic.goto_next()<CR>
-
 
 " Trouble Keymappings
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
@@ -285,16 +302,6 @@ nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap <silent>gr <cmd>TroubleToggle lsp_references<cr>
 
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>
-" nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-" Search file changes (according to git)
-nnoremap <leader>fc <cmd>lua require'telescope.builtin'.git_status{}<cr>
-nnoremap <leader>fs <cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>
-inoremap <leader>fs <cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>
 
 " get a list of definitions or jump to a sole definition
 nnoremap <silent>gd :lua require'telescope.builtin'.lsp_definitions{}<cr>
