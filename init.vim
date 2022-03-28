@@ -191,10 +191,7 @@ nnoremap <C-bslash> :NvimTreeFindFile<CR>
 
 " Puts the absolute path to the current file into the system clipboard
 nnoremap <Leader>fp :let @+=expand('%:p')<CR>
-" Plus the line number:
-nnoremap <Leader>fln :let@+=expand('%:p').":".line(".")<CR>
-" Puts the relative path to the current file into the system clipboard
-nnoremap <Leader>fn :let @+=expand('%:t')<CR>
+nnoremap <Leader>fn :let @+=expand('%').":".line(".")<CR>
 
 let g:rainbow_active=1
 

@@ -68,7 +68,15 @@ require'nvim-treesitter.configs'.setup {
         ["<leader>pc"] = "@class.outer"
       }
     },
-
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader>cn"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["<leader>cp"] = "@parameter.outer",
+      },
+    },
     -- These are provided by
     select = {
       enable = true,  -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
