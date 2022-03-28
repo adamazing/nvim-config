@@ -40,6 +40,11 @@ lua << EOF
     map('v', shortcut, command)
   end
 
+  function xmap(shortcut, command)
+    map('x', shortcut, command)
+  end
+
+
   nmap("<C-h>", "<C-w>h");
   nmap("<C-j>", "<C-w>j");
   nmap("<C-k>", "<C-w>k");
@@ -178,20 +183,23 @@ augroup vimrc_autocmds
     autocmd InsertLeave * call PanicOverLength()
 augroup END
 
-if has('termguicolors')
-  set termguicolors
-endif
+lua << EOF
+  if vim.fn.has('termguicolors') == 1 then
+    vim.opt.termguicolors = true
+  end
 
-let g:gruvbox_contrast_light='hard'
-let g:gruvbox_contrast_dark='soft'
-colo gruvbox
+  vim.g.gruvbox_contrast_light = 'hard'
+  vim.g.gruvbox_contrast_dark = 'soft'
+  vim.cmd('colorscheme gruvbox')
 
-for i in range(1,9)
-  exec 'nnoremap ' .. i .. ', ' .. i .. 'gt'
-endfor
+  -- Add mappings for tab line e.g. use `2,` to jump to the second tab
+  for i=1,9 do
+    nmap(i..",", i.."gt")
+  end
 
+EOF
 
-" let g:nvim_tree_auto_open = 1
+" TODO Move the following to the nvim tree lua setup
 " let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
 let g:nvim_tree_special_files = [ 'README.md', 'Makefile', 'MAKEFILE' ] " List of filenames that gets highlighted with NvimTreeSpecialFile
 let g:nvim_tree_show_icons = {
@@ -208,16 +216,7 @@ let g:vimspector_enable_mappings = 'HUMAN'
 " vim-test settings
 let test#strategy = "dispatch"
 
-nnoremap <leader>t :NvimTreeToggle<CR>
-nnoremap <C-bslash> :NvimTreeFindFile<CR>
 
-" Puts the absolute path to the current file into the system clipboard
-nnoremap <Leader>fp :let @+=expand('%:p')<CR>
-nnoremap <Leader>fn :let @+=expand('%').":".line(".")<CR>
-
-let g:rainbow_active=1
-
-let g:ruby_host_prog='asdf exec neovim-ruby-host'
 
 " function which trims trailing whitespace
 fun! TrimWhitespace()
@@ -251,6 +250,15 @@ vnoremap <leader>tc y<cr>:call system("tmux load-buffer -", @0)<cr>
 nnoremap <leader>tp :let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;
 
 lua << EOF
+  nmap("<Leader>t", ":NvimTreeToggle<CR>");
+  nmap("<C-bslash>", ":NvimTreeFindFile<CR>");
+
+  --  Puts the absolute path to the current file into the system clipboard
+  nmap("<Leader>fp", ":let @+=expand('%:p')<CR>")
+  nmap("<Leader>fn", ":let @+=expand('%').':'.line('.')<CR>")
+
+  vim.g.rainbow_active = 1;
+  vim.g.ruby_host_prog = 'asdf exec neovim-ruby-host'
 
   -- Escape mappings
   imap(";;","<Esc>")
@@ -282,53 +290,52 @@ lua << EOF
   nmap("[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
   nmap("]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 
-  nmap ("<leader>ff", "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>")
-  nmap ("<leader>fg", "<cmd>Telescope live_grep<cr>");
-  nmap ("<leader>fb", "<cmd>Telescope buffers<cr>");
-  nmap ("<leader>fh", "<cmd>Telescope help_tags<cr>");
+  nmap ("<Leader>ff", "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>")
+  nmap ("<Leader>fg", "<cmd>Telescope live_grep<cr>");
+  nmap ("<Leader>fb", "<cmd>Telescope buffers<cr>");
+  nmap ("<Leader>fh", "<cmd>Telescope help_tags<cr>");
   -- Search file changes (according to git)
-  nmap ("<leader>fc", "<cmd>lua require'telescope.builtin'.git_status{}<cr>");
-  nmap ("<leader>fs", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>");
-  imap ("<leader>fs", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>");
-EOF
+  nmap ("<Leader>fc", "<cmd>lua require'telescope.builtin'.git_status{}<cr>");
+  nmap ("<Leader>fs", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>");
+  imap ("<Leader>fs", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>");
 
-nnoremap <silent> <leader> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><leader>l
-
-" Trouble Keymappings
-nnoremap <leader>xx <cmd>TroubleToggle<cr>
-nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
-nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
-nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
-nnoremap <silent>gr <cmd>TroubleToggle lsp_references<cr>
+  nmap("<Leader>", ":nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><Leader>l")
 
 
-" get a list of definitions or jump to a sole definition
-nnoremap <silent>gd :lua require'telescope.builtin'.lsp_definitions{}<cr>
-" get a list of implementations for word under cursor or jump to sole
-" implementation
-nnoremap <silent>gi :lua require'telescope.builtin'.lsp_implementations{}<cr>
-nnoremap <silent>K :lua vim.lsp.buf.hover()<cr>
-nnoremap <leader>ca :lua vim.lsp.buf.code_action()<cr>
+  -- Trouble Keymappings
+  nmap("<Leader>xx", "<cmd>TroubleToggle<cr>")
+  nmap("<Leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>")
+  nmap("<Leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>")
+  nmap("<Leader>xq", "<cmd>TroubleToggle quickfix<cr>")
+  nmap("<Leader>xl", "<cmd>TroubleToggle loclist<cr>")
+  nmap("gr", "<cmd>TroubleToggle lsp_references<cr>")
+
+  -- get a list of definitions or jump to a sole definition
+  nmap("gd", ":lua require'telescope.builtin'.lsp_definitions{}<cr>")
+  -- get a list of implementations for word under cursor or jump to sole implementation
+  nmap("gi", ":lua require'telescope.builtin'.lsp_implementations{}<cr>")
+  nmap("K", ":lua vim.lsp.buf.hover()<cr>")
+  nmap("<Leader>ca", ":lua vim.lsp.buf.code_action()<cr>")
+
+  -- Treesitter playground query bindings
+  nmap("<Leader>tpg", ":TSPlaygroundToggle<CR>")
+  nmap("<Leader>ts", ":TSHighlightCapturesUnderCursor<CR>")
+
+  -- Debug Bindings
+  nmap("<Leader>dd", ":call vimspector#Launch()<CR>")
+  nmap("<Leader>dr", ":VimspectorReset<CR>")
+  nmap("<Leader>de", ":VimspectorEval")
+  nmap("<Leader>dw", ":VimspectorWatch")
+  nmap("<Leader>do", ":VimspectorShowOutput")
+  nmap("<Leader>di", "<Plug>VimspectorBalloonEval")
+  xmap("<Leader>di", "<Plug>VimspectorBalloonEval")
+
+  vim.g.vimspector_install_gadgets = { 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode-node-debug1'}
 
 
-" Debug Bindings
-nmap <leader>dd :call vimspector#Launch()<CR>
-nmap <leader>dr :VimspectorReset<CR>
-nmap <leader>de :VimspectorEval
-nmap <leader>dw :VimspectorWatch
-nmap <leader>do :VimspectorShowOutput
-nmap <leader>di <Plug>VimspectorBalloonEval
-xmap <leader>di <Plug>VimspectorBalloonEval
-
-let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode-node-debug2']
-
-" Treesitter playground query bindings
-nnoremap <leader>tpg :TSPlaygroundToggle<CR>
-nnoremap <leader>ts :TSHighlightCapturesUnderCursor<CR>
+  ----------------------------------------------------------------------------------------------
 
 
-lua <<EOF
   require'nvim-tree'.setup {
     update_to_buf_dir = {
       enable = true,
