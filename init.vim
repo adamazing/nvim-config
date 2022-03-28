@@ -1,7 +1,3 @@
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
 
 "---- vim-plug setup  ----
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
@@ -25,30 +21,52 @@ if !filereadable(vimplug_exists)
 endif
 "-------- end vim-plug setup ----
 
-syntax enable
+set shortmess += "c"
 
-" --  `set` statements
-set cmdheight=2
-set colorcolumn=150
-set completeopt=menu,menuone,preview,noinsert,noselect
-set expandtab
-set fillchars=fold:\ | set foldtext=CustomFold()
-set foldcolumn=1
-set guifont=CaskaydiaCove\ Nerd\ Font\ Mono
-set icm=split
-set ignorecase
-set mouse=nv
-set noshowmode
-set noswapfile
-set nowrap
-set nu
-set rnu
-set shortmess+=c
-set signcolumn=yes
-set smartindent
-set tabstop=2 softtabstop=0 shiftwidth=2 smarttab
-set updatetime=50
-set virtualedit=block
+lua << EOF
+  function map(mode, shortcut, command)
+    vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
+  end
+
+  function nmap(shortcut, command)
+    map('n', shortcut, command)
+  end
+
+  function imap(shortcut, command)
+    map('i', shortcut, command)
+  end
+
+  nmap("<C-h>", "<C-w>h");
+  nmap("<C-j>", "<C-w>j");
+  nmap("<C-k>", "<C-w>k");
+  nmap("<C-l>", "<C-w>l");
+
+  vim.cmd([[
+    set guifont=CaskaydiaCove\ Nerd\ Font\ Mono
+    set fillchars=fold:\ | set foldtext=CustomFold()
+  ]]);
+
+  vim.opt.signcolumn = "yes";
+  vim.opt.tabstop = 2;
+  vim.opt.softtabstop = 0;
+  vim.opt.shiftwidth = 2;
+  vim.opt.mouse = "nv";
+  vim.opt.expandtab = true;
+  vim.opt.inccommand="split"
+  vim.opt.foldcolumn = "1";
+  vim.opt.completeopt = {"menu", "menuone", "preview", "noinsert", "noselect"}
+  vim.opt.ignorecase = true;
+  vim.opt.showmode = false;
+  vim.opt.swapfile = false;
+  vim.opt.wrap = false;
+  vim.opt.number = true;
+  vim.opt.relativenumber = true;
+  vim.opt.smartindent = true;
+  vim.opt.cmdheight = 2;
+  vim.opt.colorcolumn = {150};
+  vim.opt.updatetime=50;
+  vim.opt.virtualedit = {"block"};
+EOF
 
 call plug#begin('~/.config/nvim/plugged')
 " Specify Plugins
