@@ -1,4 +1,3 @@
-
 "---- vim-plug setup  ----
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 if has('win32')&&!has('win64')
@@ -22,36 +21,12 @@ endif
 "-------- end vim-plug setup ----
 
 lua << EOF
-  function map(mode, shortcut, command)
-    vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
-  end
+  require'helpers'
 
-  function nmap(shortcut, command)
-    map('n', shortcut, command)
-  end
+  vim.g.rainbow_active = 1;
+  vim.g.ruby_host_prog = 'asdf exec neovim-ruby-host'
 
-  function imap(shortcut, command)
-    map('i', shortcut, command)
-  end
-
-  function vmap(shortcut, command)
-    map('v', shortcut, command)
-  end
-
-  function xmap(shortcut, command)
-    map('x', shortcut, command)
-  end
-
-
-  nmap("<C-h>", "<C-w>h");
-  nmap("<C-j>", "<C-w>j");
-  nmap("<C-k>", "<C-w>k");
-  nmap("<C-l>", "<C-w>l");
-
-  vim.cmd([[
-    set guifont=CaskaydiaCove\ Nerd\ Font\ Mono
-  ]]);
-
+  vim.opt.guifont = 'CaskaydiaCove Nerd Font Mono'
   vim.opt.foldtext = 'v:lua.custom_fold_text()'
   vim.opt.signcolumn = "yes";
   vim.opt.tabstop = 2;
@@ -75,98 +50,116 @@ lua << EOF
   vim.opt.colorcolumn = {150};
   vim.opt.updatetime=50;
   vim.opt.virtualedit = {"block"};
-EOF
 
-call plug#begin('~/.config/nvim/plugged')
-" Specify Plugins
-" Sensible default
-Plug 'tpope/vim-sensible'
+  vim.g.nvim_tree_special_files = { 'README.md', 'Makefile', 'MAKEFILE' }
 
-Plug 'tpope/vim-speeddating'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-projectionist'
+  vim.g['test#strategy'] = "dispatch"
 
-" Color schemes
-Plug 'rktjmp/lush.nvim' " Required by gruvbox.nvim
-Plug 'npxbr/gruvbox.nvim'
-Plug 'szw/vim-maximizer'
+  vim.g.vimspector_enable_mappings = 'HUMAN'
 
-Plug 'sangdol/mintabline.vim'
+-- EOF
 
-" DAP Setup
-" Plug 'Pocco81/DAPInstall.nvim'
-" Plug 'mfussenegger/nvim-dap'
-Plug 'puremourning/vimspector'
+  local Plug = vim.fn['plug#']
 
-Plug 'airblade/vim-gitgutter'
+  vim.call('plug#begin', '~/.config/nvim/plugged')
+  -- Specify Plugins
+  -- Sensible default
+  Plug 'tpope/vim-sensible'
 
-Plug 'hoob3rt/lualine.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'kyazdani42/nvim-tree.lua'
+  Plug 'tpope/vim-speeddating'
+  Plug 'tpope/vim-abolish'
+  Plug 'tpope/vim-rails'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-endwise'
+  Plug 'tpope/vim-dispatch'
+  Plug 'tpope/vim-projectionist'
 
-Plug 'folke/lsp-colors.nvim'
-Plug 'folke/trouble.nvim'
-Plug 'folke/twilight.nvim'
+  -- Color schemes
+  -- Lush is required by gruvbox.nvim
+  Plug 'rktjmp/lush.nvim'
+  Plug 'npxbr/gruvbox.nvim'
+  Plug 'szw/vim-maximizer'
 
-Plug 'vim-test/vim-test'
+  Plug 'sangdol/mintabline.vim'
 
-Plug 'tpope/vim-unimpaired'
+  -- DAP Setup
+  -- Plug 'Pocco81/DAPInstall.nvim'
+  -- Plug 'mfussenegger/nvim-dap'
+  Plug 'puremourning/vimspector'
 
-" Plug 'onsails/lspkind-nvim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
+  Plug 'airblade/vim-gitgutter'
 
-" Plug 'simrat39/rust-tools.nvim'
-Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+  Plug 'hoob3rt/lualine.nvim'
+  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'kyazdani42/nvim-tree.lua'
 
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
+  Plug 'folke/lsp-colors.nvim'
+  Plug 'folke/trouble.nvim'
+  Plug 'folke/twilight.nvim'
 
-Plug 'mechatroner/rainbow_csv'
+  Plug 'vim-test/vim-test'
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-Plug 'RRethy/nvim-treesitter-textsubjects'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-Plug 'David-Kunz/treesitter-unit'
-Plug 'p00f/nvim-ts-rainbow'
-Plug 'RRethy/nvim-treesitter-endwise'
+  Plug 'tpope/vim-unimpaired'
 
-" Requires plenary and nui.nvim
-Plug 'bennypowers/nvim-regexplainer'
+  -- Plug 'onsails/lspkind-nvim'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'williamboman/nvim-lsp-installer'
 
-Plug 'windwp/nvim-autopairs'
-Plug 'kosayoda/nvim-lightbulb'
+  -- Plug 'simrat39/rust-tools.nvim'
+  Plug('tzachar/cmp-tabnine', { ['do'] = './install.sh' })
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-ui-select.nvim'
-Plug 'nvim-telescope/telescope-symbols.nvim'
+  Plug 'hrsh7th/cmp-vsnip'
+  Plug 'hrsh7th/vim-vsnip'
 
-Plug 'aklt/plantuml-syntax'
-Plug 'scrooloose/vim-slumlord'
+  Plug 'mechatroner/rainbow_csv'
 
-Plug 'simrat39/symbols-outline.nvim' " Shows symbol outline of current file
+  Plug('nvim-treesitter/nvim-treesitter', { ['do'] =':TSUpdate'});
 
-call plug#end()
+  Plug 'nvim-treesitter/playground'
+  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+  Plug 'RRethy/nvim-treesitter-textsubjects'
+  Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+  Plug 'David-Kunz/treesitter-unit'
+  Plug 'p00f/nvim-ts-rainbow'
+  Plug 'RRethy/nvim-treesitter-endwise'
+
+  -- Requires plenary and nui.nvim
+  Plug 'bennypowers/nvim-regexplainer'
+
+  Plug 'windwp/nvim-autopairs'
+  Plug 'kosayoda/nvim-lightbulb'
+
+  Plug 'nvim-lua/popup.nvim'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'MunifTanjim/nui.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-telescope/telescope-ui-select.nvim'
+  Plug 'nvim-telescope/telescope-symbols.nvim'
+
+  Plug 'aklt/plantuml-syntax'
+  Plug 'scrooloose/vim-slumlord'
+
+  Plug 'simrat39/symbols-outline.nvim' -- Shows symbol outline of current file
+  vim.call('plug#end')
+
+-- " TODO Move the following to the nvim tree lua setup
+-- " let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
+-- " let g:nvim_tree_lsp_diagnostics = 1
+-- " let g:nvim_tree_width_allow_resize  = 1
+-- " let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
 
 
-lua << EOF
+  -- List of filenames that gets highlighted with NvimTreeSpecialFile
+  -- vim.g['nvim_tree_show_icons'] = { 'git': 1, 'folders': 1, 'files': 1, }
+
   vim.cmd([[
     highlight ColorColumn ctermbg=grey guibg=grey
     highlight OverLength ctermbg=red guibg=red
@@ -216,26 +209,6 @@ lua << EOF
     nmap(i..",", i.."gt")
   end
 
-EOF
-
-" TODO Move the following to the nvim tree lua setup
-" let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
-let g:nvim_tree_special_files = [ 'README.md', 'Makefile', 'MAKEFILE' ] " List of filenames that gets highlighted with NvimTreeSpecialFile
-let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 1,
-    \ 'files': 1,
-    \ }
-" let g:nvim_tree_lsp_diagnostics = 1
-" let g:nvim_tree_width_allow_resize  = 1
-" let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
-
-let g:vimspector_enable_mappings = 'HUMAN'
-
-" vim-test settings
-let test#strategy = "dispatch"
-
-lua << EOF
   function _G.TrimWhitespace()
     local patterns = { [[%s/\s\+$//e]], }
     local save = vim.fn.winsaveview()
@@ -267,14 +240,20 @@ lua << EOF
   vim.cmd([[
     cabbrev ff <cmd>lua fix_rebase()<CR>
   ]])
-EOF
 
-" yank visual selection to tmux clipboard
-vnoremap <leader>tc y<cr>:call system("tmux load-buffer -", @0)<cr>
-" paste from tmux clipboard
-nnoremap <leader>tp :let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;
 
-lua << EOF
+  -- Mappings
+  nmap("<C-h>", "<C-w>h");
+  nmap("<C-j>", "<C-w>j");
+  nmap("<C-k>", "<C-w>k");
+  nmap("<C-l>", "<C-w>l");
+
+  -- yank visual selection to tmux clipboard
+  vmap("<Leader>tc", "y<cr>:call system('tmux load-buffer -', @0)<cr>")
+
+  -- paste from tmux clipboard
+  nmap("<leader>tp", ':let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;')
+
   nmap("<Leader>t", ":NvimTreeToggle<CR>");
   nmap("<C-bslash>", ":NvimTreeFindFile<CR>");
 
@@ -282,8 +261,6 @@ lua << EOF
   nmap("<Leader>fp", ":let @+=expand('%:p')<CR>")
   nmap("<Leader>fn", ":let @+=expand('%').':'.line('.')<CR>")
 
-  vim.g.rainbow_active = 1;
-  vim.g.ruby_host_prog = 'asdf exec neovim-ruby-host'
 
   -- Escape mappings
   imap(";;","<Esc>")
@@ -392,23 +369,12 @@ lua << EOF
         return sep
       end
     },
-    -- debug = true,
   }
 
---  require('auto-session').setup {
---    log_level = 'info',
---    auto_session_suppress_dirs = {'~/', '~/Projects'}
---  }
---
   require("completion")
   require("treesitter")
   require("lang")
   require("statusbar")
   require("telescope_integration")
   require("prettiness")
-  -- require("keymaps")
 EOF
-
-" lua <<EOF
-"   require("rust-tools").setup({})
-" EOF
