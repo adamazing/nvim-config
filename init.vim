@@ -21,8 +21,6 @@ if !filereadable(vimplug_exists)
 endif
 "-------- end vim-plug setup ----
 
-set shortmess += "c"
-
 lua << EOF
   function map(mode, shortcut, command)
     vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
@@ -52,9 +50,9 @@ lua << EOF
 
   vim.cmd([[
     set guifont=CaskaydiaCove\ Nerd\ Font\ Mono
-    set fillchars=fold:\ | set foldtext=CustomFold()
   ]]);
 
+  vim.opt.foldtext = 'v:lua.custom_fold_text()'
   vim.opt.signcolumn = "yes";
   vim.opt.tabstop = 2;
   vim.opt.softtabstop = 0;
@@ -63,6 +61,8 @@ lua << EOF
   vim.opt.expandtab = true;
   vim.opt.inccommand="split"
   vim.opt.foldcolumn = "1";
+  vim.opt.formatoptions = "tcroqnj"
+  vim.opt.shortmess = vim.opt.shortmess + "c"
   vim.opt.completeopt = {"menu", "menuone", "preview", "noinsert", "noselect"}
   vim.opt.ignorecase = true;
   vim.opt.showmode = false;
@@ -165,25 +165,44 @@ Plug 'simrat39/symbols-outline.nvim' " Shows symbol outline of current file
 
 call plug#end()
 
-function! CustomFold()
-  return printf('    %d lines -[ %s',v:foldend - v:foldstart + 1, getline(v:foldstart))
-endfunction
-
-highlight ColorColumn ctermbg=grey guibg=grey
-fun! PanicOverLength()
-  " Don't show red bg on overlength for these file types
-  if &ft =~ 'csv'
-    return
-  endif
-  match OverLength /\%150v.*/
-endfun
-
-augroup vimrc_autocmds
-    autocmd InsertLeave * highlight OverLength ctermbg=red guibg=red
-    autocmd InsertLeave * call PanicOverLength()
-augroup END
 
 lua << EOF
+  vim.cmd([[
+    highlight ColorColumn ctermbg=grey guibg=grey
+    highlight OverLength ctermbg=red guibg=red
+  ]])
+
+  function _G.MatchOverLength()
+    vim.cmd('match OverLength /\\%151v.\\+/')
+  end
+
+  local overlength_augroup = vim.api.nvim_create_augroup("overlength_cmds", { clear = true})
+  vim.api.nvim_create_autocmd( {"BufEnter", "InsertLeave"}, { callback = MatchOverLength, group = overlength_augroup})
+
+  function contains(tab, val)
+    for i,value in ipairs(tab) do
+      if value == val then
+        return true
+      end
+    end
+  end
+
+  function _G.custom_fold_text()
+    local line = vim.fn.getline(vim.v.foldstart)
+    local line_count = vim.v.foldend - vim.v.foldstart + 1
+    local line_text = "("..vim.v.foldstart.."-"..vim.v.foldend..")"
+
+    return "     "..line_count.." lines "..line_text.." -[ "..line
+  end
+
+  function _G.over_length()
+    local ignore_filetypes_over_length = { "csv" }
+    if contains(ignore_filetypes_over_length, vim.bo.filetype) == true then
+      print("Filetype: "..vim.bo.filetype)
+    end
+  end
+  --  vim.api.highlight
+
   if vim.fn.has('termguicolors') == 1 then
     vim.opt.termguicolors = true
   end
@@ -216,33 +235,39 @@ let g:vimspector_enable_mappings = 'HUMAN'
 " vim-test settings
 let test#strategy = "dispatch"
 
+lua << EOF
+  function _G.TrimWhitespace()
+    local patterns = { [[%s/\s\+$//e]], }
+    local save = vim.fn.winsaveview()
+    for _, p in pairs(patterns) do
+      vim.api.nvim_exec(string.format("keeppatterns silent! %s", p), false)
+    end
+    vim.fn.winrestview(save)
+  end
 
+  -- pre save action
+  local pre_save_augroup = vim.api.nvim_create_augroup( "presave_cmds", { clear = true} )
+  vim.api.nvim_create_autocmd( {"BufWritePre"}, { callback = TrimWhitespace, group = pre_save_augroup})
 
-" function which trims trailing whitespace
-fun! TrimWhitespace()
-  let l:save = winsaveview()
-  keeppattern %s/\s\+$//e
-  call winrestview(l:save)
-endfun
+  function _G.highlight_on_yank()
+    require'vim.highlight'.on_yank()
+  end
 
-augroup AJH
-  autocmd!
-  autocmd BufWritePre * :call TrimWhitespace()
-augroup END
+  local hightlight_yank_group = vim.api.nvim_create_augroup( "highlight_yank", { clear = true } )
+  vim.api.nvim_create_autocmd( {"TextYankPost"}, { group = hightlight_yank_group, callback = highlight_on_yank})
 
-" :Fix searches and replaces all but the first instance of 'pick' to 'f' to squash previous commits into a fix commit
-function! Fix()
-  :2,$s/^pick /f /
-  :wq
-endfunction
+  -- Used in an interactive rebase, squash all commits into the earliest one then write and exit
+  function fix_rebase()
+    vim.cmd([[
+      :2,$s/^pick /f /
+      :wq
+    ]])
+  end
 
-" Abbreviate the Fix() call so it can be run with `ff`
-cabbrev ff call Fix()
-
-augroup highlight_yank
-  autocmd!
-  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
-augroup END
+  vim.cmd([[
+    cabbrev ff <cmd>lua fix_rebase()<CR>
+  ]])
+EOF
 
 " yank visual selection to tmux clipboard
 vnoremap <leader>tc y<cr>:call system("tmux load-buffer -", @0)<cr>
