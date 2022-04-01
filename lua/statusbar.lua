@@ -40,6 +40,7 @@ local function setup_status_line()
   tabline = {},
   extensions = {
     'fugitive',
+    'quickfix',
     'nvim-tree',
     'symbols-outline'
   }

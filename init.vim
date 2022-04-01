@@ -114,9 +114,6 @@ lua << EOF
   Plug 'p00f/nvim-ts-rainbow'
   Plug 'RRethy/nvim-treesitter-endwise'
 
-  -- Requires plenary and nui.nvim
-  Plug 'bennypowers/nvim-regexplainer'
-
   Plug 'windwp/nvim-autopairs'
   Plug 'kosayoda/nvim-lightbulb'
 
@@ -126,6 +123,9 @@ lua << EOF
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-telescope/telescope-ui-select.nvim'
   Plug 'nvim-telescope/telescope-symbols.nvim'
+
+  -- Requires plenary and nui.nvim
+  Plug 'bennypowers/nvim-regexplainer'
 
   Plug 'aklt/plantuml-syntax'
   Plug 'scrooloose/vim-slumlord'
