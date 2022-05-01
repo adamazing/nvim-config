@@ -47,14 +47,17 @@ nmap("<Leader>bg", ":let &background = ( &background == 'dark'? 'light' : 'dark'
 nmap("[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 nmap("]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 
+imap ("<Leader>fe", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>");
+nmap ("<Leader>fb", "<cmd>Telescope buffers<cr>");
 nmap ("<Leader>ff", "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>")
 nmap ("<Leader>fg", "<cmd>Telescope live_grep<cr>");
-nmap ("<Leader>fb", "<cmd>Telescope buffers<cr>");
 nmap ("<Leader>fh", "<cmd>Telescope help_tags<cr>");
+nmap ("<Leader>fp", "<cmd>lua require'telescope.builtin'.builtin()<cr>");
+nmap ("<Leader>fq", "<cmd>lua require'telescope.builtin'.quickfix()<cr>");
+nmap ("<Leader>fs", "<cmd>Telescope grep_string<cr>");
+nmap ("<Leader>ft", "<cmd>lua require'telescope.builtin'.treesitter()<cr>");
 -- Search file changes (according to git)
 nmap ("<Leader>fc", "<cmd>lua require'telescope.builtin'.git_status{}<cr>");
-nmap ("<Leader>fs", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>");
-imap ("<Leader>fs", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'emoji'} }<cr>");
 
 nmap("<Leader>", ":nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><Leader>l")
 

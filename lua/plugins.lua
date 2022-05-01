@@ -50,7 +50,21 @@ return require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
 
-  -- use 'simrat39/rust-tools.nvim'
+  use {
+    'simrat39/rust-tools.nvim',
+    ft={'rust'},
+    config = function()
+      require('rust-tools').setup({})
+    end
+  }
+  use {
+    'napmn/react-extract.nvim',
+    ft={'typescript', 'javascript'},
+    config = function()
+      require("react-extract").setup()
+    end
+  }
+
 
   use { 'tzachar/cmp-tabnine', run = './install.sh' }
   use 'hrsh7th/cmp-nvim-lsp'
