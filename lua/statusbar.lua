@@ -1,11 +1,16 @@
+vim.cmd([[
+  highlight WinSeparator guibg=None
+]])
+
 local function setup_status_line()
   require'lualine'.setup {
     options = {
-      icons_enabled = true,
-      theme = 'auto',
       component_separators = {left = '', right = ''},
+      disabled_filetypes = {},
+      globalstatus = true,
+      icons_enabled = true,
       section_separators = {left = '', right = ''},
-      disabled_filetypes = {}
+      theme = 'auto',
     },
     sections = {
       lualine_a = {'mode'},

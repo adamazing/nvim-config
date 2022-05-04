@@ -12,9 +12,6 @@ vim.g['test#strategy'] = "dispatch"
 
 vim.g.vimspector_enable_mappings = 'HUMAN'
 
-vim.g.gruvbox_contrast_light = 'hard'
-vim.g.gruvbox_contrast_dark = 'soft'
-
 vim.g.vimspector_install_gadgets = { 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode-node-debug1'}
 
 -- " TODO Move the following to the nvim tree lua setup
@@ -29,10 +26,8 @@ vim.g.vimspector_install_gadgets = { 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode
 -- TODO:
 -- Replace instances of vim.cmd with lua api alternatives as they become available
 
-vim.cmd([[
-  highlight ColorColumn ctermbg=grey guibg=grey
-  highlight OverLength ctermbg=red guibg=red
-]])
+vim.api.nvim_set_hl(0, "ColorColumn", {guibg = grey; ctermbg = grey})
+vim.api.nvim_set_hl(0, "OverLength",  {guibg = red; ctermbg = red})
 
 function _G.MatchOverLength()
   vim.cmd('match OverLength /\\%151v.\\+/')
@@ -77,7 +72,7 @@ local hightlight_yank_group = vim.api.nvim_create_augroup( "highlight_yank", { c
 vim.api.nvim_create_autocmd( {"TextYankPost"}, { group = hightlight_yank_group, callback = highlight_on_yank})
 
 -- Used in an interactive rebase, squash all commits into the earliest one then write and exit
-function fix_rebase()
+function _G.fix_rebase()
   vim.cmd([[
   :2,$s/^pick /f /
   :wq

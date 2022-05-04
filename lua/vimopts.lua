@@ -29,4 +29,3 @@ end
 vim.opt.updatetime=50;
 vim.opt.virtualedit = {"block"};
 vim.opt.wrap = false;
-

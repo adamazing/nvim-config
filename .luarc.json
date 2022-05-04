@@ -7,7 +7,8 @@
         "nmap",
         "imap",
         "vmap",
-        "xmap"
+        "xmap",
+        "packer_bootstrap"
     ],
     "Lua.workspace.checkThirdParty": false
 }
