@@ -18,11 +18,11 @@ nmap("<Leader>fn", ":let @+=expand('%').':'.line('.')<CR>")
 
 
 -- Escape mappings
-imap(";;","<Esc>")
-vmap(";;","<Esc>")
+-- imap(";;","<Esc>")
+-- vmap(";;","<Esc>")
 imap("jk","<Esc>")
 vmap("jk","<Esc>")
-imap("<Leader>;",";")
+-- imap("<Leader>;",";")
 
 -- vim-test mappings
 nmap("<Leader>rT", ":TestFile<CR>")
@@ -74,8 +74,10 @@ nmap("gr", "<cmd>TroubleToggle lsp_references<cr>")
 nmap("gd", ":lua require'telescope.builtin'.lsp_definitions{}<cr>")
 -- get a list of implementations for word under cursor or jump to sole implementation
 nmap("gi", ":lua require'telescope.builtin'.lsp_implementations{}<cr>")
-nmap("K", ":lua vim.lsp.buf.hover()<cr>")
-nmap("<Leader>ca", ":lua vim.lsp.buf.code_action()<cr>")
+
+-- nmap("K", ":lua vim.lsp.buf.hover()<cr>")
+-- nmap("<Leader>ca", ":lua vim.lsp.buf.code_action()<cr>")
+-- nmap("<Leader>rn", ":lua vim.lsp.buf.rename()<cr>")
 
 -- Treesitter playground query bindings
 nmap("<Leader>tpg", ":TSPlaygroundToggle<CR>")

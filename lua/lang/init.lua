@@ -1,6 +1,9 @@
 USER = vim.fn.expand('$USER')
 HOME = vim.fn.expand('$HOME')
 
+local nvim_lspinstaller = require('nvim-lsp-installer')
+nvim_lspinstaller.setup {}
+
 -- symbols for autocomplete
 vim.lsp.protocol.CompletionItemKind = {
   "   (Text) ",
@@ -39,11 +42,10 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
-
-
 -- Language specific key mappings
--- require('lang.keymappings')
-local on_attach = function(client, bufnr)
+_G.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+_G.on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   -- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -54,8 +56,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', '<leader>gk', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', '<leader>li', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  -- buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  -- buf_set_keymap('n', '<leader>li', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', '<leader>lwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<leader>lwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<leader>lwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
@@ -75,7 +77,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
     vim.api.nvim_command [[augroup END]]
   end -- Format
-
+  -- print("asdnisaondsakjndas")
 end
 
 -- -- Customizing how diagnostics are displayed
@@ -94,7 +96,7 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-vim.o.updatetime = 500
+vim.o.updatetime = 200
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float({focusable=false})]]
 
 
@@ -105,98 +107,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
  }
 })
 
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
---   virtual_text = {
---     prefix = ' ', -- Could be '●', '▎', 'x'
---   }
--- })
-
-local nvim_lsp = require('lspconfig')
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
--- local servers = { 'solargraph', 'sumneko_lua' }
-
--- for _, lsp in ipairs(servers) do
---   print("Setting up LSP: " .. lsp)
---   nvim_lsp[lsp].setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---     flags = {
---       debounce_text_changes = 250,
---     },
---   }
--- end
-
--- Ruby LSP (solargraph)
-local solargraph_settings = {
-  cmd = { "solargraph", "stdio" },
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = { "ruby" },
-  init_options = {
-    formatting = true,
-  },
-  root_dir = nvim_lsp.util.root_pattern("Gemfile", ".git"),
-  settings = {
-    solargraph = {
-      commandPath = HOME..'/.asdf/shims/solargraph',
-      diagnostics = true,
-    },
-  },
-}
-nvim_lsp.solargraph.setup(solargraph_settings)
-
-
--- Rust LSP
-local rustdev = {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-nvim_lsp.rust_analyzer.setup(rustdev)
-
--- Lua LSP
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-
-local luadev = {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'Lua 5.3',
-        -- command = '~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server',
-        path = runtime_path,
-      },
-      diagnostics = {
-        globals = {'vim'},
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("",true),
-      },
-      telemetry =  {
-        enable = false,
-      },
-    }
-  }
-}
-nvim_lsp.sumneko_lua.setup(luadev)
-
-
-local lsp_installer = require("nvim-lsp-installer")
-local ignore_servers = {
-  "sumneko_lua",
-  "rust_analyzer",
-  "solargraph",
-  "vimls"
-}
-lsp_installer.on_server_ready(function (server)
-  local opts = {}
-
-  if ignore_servers[server.name] == nil then
-    server:setup(opts)
-  end
-end)
+require'lang/ruby'
+require'lang/lua'
+require'lang/rust'

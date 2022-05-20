@@ -240,6 +240,7 @@ _G.packer_plugins = {
     url = "https://github.com/mechatroner/rainbow_csv"
   },
   ["react-extract.nvim"] = {
+    config = { "\27LJ\2\n;\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\18react-extract\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -247,10 +248,8 @@ _G.packer_plugins = {
     url = "https://github.com/napmn/react-extract.nvim"
   },
   ["rust-tools.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "/Users/adam/.local/share/nvim/site/pack/packer/opt/rust-tools.nvim",
+    loaded = true,
+    path = "/Users/adam/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
     url = "https://github.com/simrat39/rust-tools.nvim"
   },
   ["symbols-outline.nvim"] = {
@@ -328,6 +327,11 @@ _G.packer_plugins = {
     path = "/Users/adam/.local/share/nvim/site/pack/packer/start/vim-sensible",
     url = "https://github.com/tpope/vim-sensible"
   },
+  ["vim-slime"] = {
+    loaded = true,
+    path = "/Users/adam/.local/share/nvim/site/pack/packer/start/vim-slime",
+    url = "https://github.com/jpalardy/vim-slime"
+  },
   ["vim-slumlord"] = {
     loaded = true,
     path = "/Users/adam/.local/share/nvim/site/pack/packer/start/vim-slumlord",
@@ -370,7 +374,6 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType rust ++once lua require("packer.load")({'rust-tools.nvim'}, { ft = "rust" }, _G.packer_plugins)]]
 vim.cmd [[au FileType typescript ++once lua require("packer.load")({'react-extract.nvim'}, { ft = "typescript" }, _G.packer_plugins)]]
 vim.cmd [[au FileType javascript ++once lua require("packer.load")({'react-extract.nvim'}, { ft = "javascript" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)

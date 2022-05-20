@@ -68,8 +68,8 @@ function _G.highlight_on_yank()
   require'vim.highlight'.on_yank()
 end
 
-local hightlight_yank_group = vim.api.nvim_create_augroup( "highlight_yank", { clear = true } )
-vim.api.nvim_create_autocmd( {"TextYankPost"}, { group = hightlight_yank_group, callback = highlight_on_yank})
+local highlight_yank_group = vim.api.nvim_create_augroup( "highlight_yank", { clear = true } )
+vim.api.nvim_create_autocmd( {"TextYankPost"}, { group = highlight_yank_group, callback = highlight_on_yank})
 
 -- Used in an interactive rebase, squash all commits into the earliest one then write and exit
 function _G.fix_rebase()
@@ -87,12 +87,12 @@ cabbrev ff <cmd>lua fix_rebase()<CR>
 require'mappings'
 
 require'nvim-tree'.setup {
-  update_to_buf_dir = {
+  hijack_directories = {
     enable = true,
     auto_open = true,
   },
-  view = {
-    lsp_diagnostics = true,
+  diagnostics = {
+    enable = true,
   }
 }
 

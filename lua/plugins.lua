@@ -52,11 +52,9 @@ return require('packer').startup(function(use)
 
   use {
     'simrat39/rust-tools.nvim',
-    ft={'rust'},
-    config = function()
-      require('rust-tools').setup({})
-    end
+    commit = 'e29fb47326093fb197f17eae5ac689979a9ce191'
   }
+
   use {
     'napmn/react-extract.nvim',
     ft={'typescript', 'javascript'},
@@ -65,6 +63,8 @@ return require('packer').startup(function(use)
     end
   }
 
+  -- provides tmux repl functionality (sending code to REPL running in a tmux window/pane)
+  use 'jpalardy/vim-slime'
 
   use { 'tzachar/cmp-tabnine', run = './install.sh' }
   use 'hrsh7th/cmp-nvim-lsp'
