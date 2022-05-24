@@ -43,13 +43,12 @@ local cmp = require'cmp'
 cmp.setup({
   formatting = {
     format = function(entry, vim_item)
-      vim_item.kind = (cmp_kinds[vim_item.kind] or '') --.. vim_item.kind
+      vim_item.kind = (cmp_kinds[vim_item.kind] or '')
 			local menu = source_mapping[entry.source.name]
 			if entry.source.name == 'cmp_tabnine' then
 				if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
 					menu = entry.completion_item.data.detail .. ' ' .. menu
 				end
-				-- vim_item.kind = ''
 			end
 			vim_item.menu = menu
 			return vim_item
@@ -62,7 +61,7 @@ cmp.setup({
     end,
   },
   completion = {
-    keyword_length = 3
+    keyword_length = 1  -- TODO: try this set at one and increase if it negatively impacts performance.
   },
   mapping = {
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
@@ -96,10 +95,10 @@ cmp.setup({
   },
   sources = cmp.config.sources({
     { name = 'signature_help'},
+    { name = 'nvim_lsp', max_item_count = 25 }, -- limit number of items returned from lsp
     { name = 'cmp_tabnine' },
-    { name = 'nvim_lsp' },
     { name = 'vsnip' },
-    { name = 'buffer' },
+    { name = 'buffer', keyword_length = 5 }, -- don't complete from the buffer until 5 keys have been hit
     { name = 'path' },
   }),
   sorting = {
@@ -135,7 +134,7 @@ cmp.setup.cmdline(':', {
 local tabnine = require('cmp_tabnine.config')
 tabnine:setup({
 	max_lines = 1000;
-	max_num_results = 20;
+	max_num_results = 25;
 	sort = true;
 	run_on_every_keystroke = true;
 	snippet_placeholder = '..';
