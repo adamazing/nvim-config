@@ -6,8 +6,6 @@ require'plugins'
 vim.g.rainbow_active = 1;
 vim.g.ruby_host_prog = 'asdf exec neovim-ruby-host'
 
-vim.g.nvim_tree_special_files = { 'README.md', 'Makefile', 'MAKEFILE' }
-
 vim.g['test#strategy'] = "dispatch"
 
 vim.g.vimspector_enable_mappings = 'HUMAN'
@@ -100,6 +98,9 @@ require'nvim-tree'.setup {
   },
   diagnostics = {
     enable = true,
+  },
+  renderer = {
+    special_files = { 'README.md', 'Makefile', 'MAKEFILE' }
   }
 }
 
