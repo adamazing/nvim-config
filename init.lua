@@ -16,7 +16,7 @@ vim.g.vimspector_install_gadgets = { 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode
 vim.g.slime_target = "tmux"
 -- default target, override with `:SlimeConfig`
 vim.cmd( [[
-let g:slime_default_config = { "socket_name": "default", "target_pane": "{right}" }
+  let g:slime_default_config = { "socket_name": "default", "target_pane": "{right}" }
 ]] )
 
 -- " TODO Move the following to the nvim tree lua setup

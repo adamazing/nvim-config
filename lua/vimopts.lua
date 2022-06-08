@@ -3,6 +3,8 @@
 vim.opt.cmdheight = 2;
 vim.opt.colorcolumn = {150};
 vim.opt.completeopt = {"menu", "menuone", "preview", "noinsert", "noselect"}
+vim.opt.cursorline = true;
+vim.opt.cursorlineopt = { "number", "screenline" }
 vim.opt.expandtab = true;
 vim.opt.fillchars:append('eob: ');
 vim.opt.foldcolumn = "1";
