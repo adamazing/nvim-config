@@ -16,6 +16,10 @@ nmap("<C-bslash>", ":NvimTreeFindFile<CR>");
 nmap("<Leader>fp", ":let @+=expand('%:p')<CR>")
 nmap("<Leader>fn", ":let @+=expand('%').':'.line('.')<CR>")
 
+vmap("<C-c><C-c>", ":'<,'>SlimeSend<CR>")
+nmap("<C-c><C-f>", ":SlimeSend0 expand('%')<CR>") -- send the relative file path to the pane configured with vim slime
+nmap("<C-c><C-r>", ":SlimeSend0 'rspec '.expand('%')<CR>") -- send the relative file path to the pane configured with vim slime prefixed with 'rspec'
+nmap("<C-c><C-n>", ":SlimeSend0 'rspec '.expand('%').':'.line('.')<CR>") -- send the path and line number with vim slime prefixed with 'rspec'
 
 -- Escape mappings
 -- imap(";;","<Esc>")

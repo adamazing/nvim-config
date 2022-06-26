@@ -63,6 +63,25 @@ return require('packer').startup(function(use)
     end
   }
 
+  use {
+    'abecodes/tabout.nvim',
+    config = function()
+      require('tabout').setup {
+        ignore_beginning = true,
+        completion = true,
+        tabouts ={
+          {open = "'", close = "'"},
+          {open = '"', close = '"'},
+          {open = '`', close = '`'},
+          {open = '(', close = ')'},
+          {open = '[', close = ']'},
+          {open = '{', close = '}'},
+          {open = '#', close = ']'}
+        }
+      }
+    end
+  }
+
   -- provides tmux repl functionality (sending code to REPL running in a tmux window/pane)
   use 'jpalardy/vim-slime'
 

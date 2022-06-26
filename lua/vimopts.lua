@@ -1,5 +1,8 @@
 ---@diagnostic disable: undefined-global
 
+vim.g.python3_host_prog = '/opt/homebrew/bin/python3'
+vim.g.ruby_host_prog = 'asdf exec neovim-ruby-host'
+
 vim.opt.cmdheight = 2;
 vim.opt.colorcolumn = {150};
 vim.opt.completeopt = {"menu", "menuone", "preview", "noinsert", "noselect"}
@@ -20,7 +23,9 @@ vim.opt.shiftwidth = 2;
 vim.opt.shortmess:append('c');
 vim.opt.showmode = false;
 vim.opt.signcolumn = "yes";
+vim.opt.smartcase = true;
 vim.opt.smartindent = true;
+vim.opt.smarttab = true;
 vim.opt.softtabstop = 0;
 vim.opt.swapfile = false;
 vim.opt.tabstop = 2;

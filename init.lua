@@ -4,7 +4,6 @@ require'plugins'
 
 -- plugin options
 vim.g.rainbow_active = 1;
-vim.g.ruby_host_prog = 'asdf exec neovim-ruby-host'
 
 vim.g['test#strategy'] = "dispatch"
 

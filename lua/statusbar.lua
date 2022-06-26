@@ -14,7 +14,16 @@ local function setup_status_line()
     },
     sections = {
       lualine_a = {'mode'},
-      lualine_b = {'branch', 'diagnostics'},
+      lualine_b = {
+        {
+          'diagnostics',
+          sources = { 'nvim_lsp' },
+          sections = { 'error', 'warn', 'info', 'hint'},
+          colored = true,
+          always_visible = false
+        },
+        'branch',
+      },
       lualine_c = {
         {
           'filename',

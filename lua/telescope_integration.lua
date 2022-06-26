@@ -18,11 +18,13 @@ telescope.setup {
     mappings = {
       i = {
         ["<c-t>"] = trouble.open_with_trouble,
-        ["<c-Q>"] = actions.send_selected_to_qflist + actions.open_qflist
+        ["<c-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<c-r>"] = actions.delete_buffer
       },
       n = {
         ["<c-t>"] = trouble.open_with_trouble,
-        ["<c-Q>"] = actions.send_selected_to_qflist + actions.open_qflist
+        ["<c-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<c-r>"] = actions.delete_buffer
       },
     },
     vimgrep_arguments = { 'rg', '--hidden', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case' }

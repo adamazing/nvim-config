@@ -257,6 +257,12 @@ _G.packer_plugins = {
     path = "/Users/adam/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
     url = "https://github.com/simrat39/symbols-outline.nvim"
   },
+  ["tabout.nvim"] = {
+    config = { "\27LJ\2\nŸ\2\0\0\5\0\f\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0004\3\b\0005\4\4\0>\4\1\0035\4\5\0>\4\2\0035\4\6\0>\4\3\0035\4\a\0>\4\4\0035\4\b\0>\4\5\0035\4\t\0>\4\6\0035\4\n\0>\4\a\3=\3\v\2B\0\2\1K\0\1\0\ftabouts\1\0\2\nclose\6]\topen\6#\1\0\2\nclose\6}\topen\6{\1\0\2\nclose\6]\topen\6[\1\0\2\nclose\6)\topen\6(\1\0\2\nclose\6`\topen\6`\1\0\2\nclose\6\"\topen\6\"\1\0\2\nclose\6'\topen\6'\1\0\2\15completion\2\21ignore_beginning\2\nsetup\vtabout\frequire\0" },
+    loaded = true,
+    path = "/Users/adam/.local/share/nvim/site/pack/packer/start/tabout.nvim",
+    url = "https://github.com/abecodes/tabout.nvim"
+  },
   ["telescope-symbols.nvim"] = {
     loaded = true,
     path = "/Users/adam/.local/share/nvim/site/pack/packer/start/telescope-symbols.nvim",
@@ -370,6 +376,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: tabout.nvim
+time([[Config for tabout.nvim]], true)
+try_loadstring("\27LJ\2\nŸ\2\0\0\5\0\f\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0004\3\b\0005\4\4\0>\4\1\0035\4\5\0>\4\2\0035\4\6\0>\4\3\0035\4\a\0>\4\4\0035\4\b\0>\4\5\0035\4\t\0>\4\6\0035\4\n\0>\4\a\3=\3\v\2B\0\2\1K\0\1\0\ftabouts\1\0\2\nclose\6]\topen\6#\1\0\2\nclose\6}\topen\6{\1\0\2\nclose\6]\topen\6[\1\0\2\nclose\6)\topen\6(\1\0\2\nclose\6`\topen\6`\1\0\2\nclose\6\"\topen\6\"\1\0\2\nclose\6'\topen\6'\1\0\2\15completion\2\21ignore_beginning\2\nsetup\vtabout\frequire\0", "config", "tabout.nvim")
+time([[Config for tabout.nvim]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
