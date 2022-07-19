@@ -12,8 +12,14 @@ local solargraph_settings = {
   root_dir = nvim_lsp.util.root_pattern("Gemfile", ".git"),
   settings = {
     solargraph = {
+      autoformat = true,
       commandPath = HOME..'/.asdf/shims/solargraph',
-      diagnostics = true,
+      completion = true,
+      diagnostic = true,
+      folding = true,
+      references = true,
+      rename = true,
+      symbols = true,
     },
   },
 }

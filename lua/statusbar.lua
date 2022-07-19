@@ -17,12 +17,21 @@ local function setup_status_line()
       lualine_b = {
         {
           'diagnostics',
-          sources = { 'nvim_lsp' },
+          sources = { 'nvim_lsp','nvim_diagnostic' },
           sections = { 'error', 'warn', 'info', 'hint'},
           colored = true,
           always_visible = false
         },
-        'branch',
+        {
+          'branch',
+          fmt = function(str)
+            if str:len() > 45 then
+              return str:sub(1,20) .. '...' .. str:sub(str:len()-16,str:len())
+            else
+              return str
+            end
+          end
+        },
       },
       lualine_c = {
         {
@@ -56,7 +65,7 @@ local function setup_status_line()
     'fugitive',
     'quickfix',
     'nvim-tree',
-    'symbols-outline'
+    -- 'symbols-outline'
   }
 }
 end

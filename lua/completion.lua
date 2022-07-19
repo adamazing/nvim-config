@@ -94,8 +94,8 @@ cmp.setup({
     },
   },
   sources = cmp.config.sources({
-    { name = 'signature_help'},
     { name = 'nvim_lsp', max_item_count = 25 }, -- limit number of items returned from lsp
+    { name = 'signature_help'},
     { name = 'cmp_tabnine' },
     { name = 'vsnip' },
     { name = 'buffer', keyword_length = 5 }, -- don't complete from the buffer until 5 keys have been hit
@@ -104,9 +104,9 @@ cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
+      compare.exact,
       require('cmp_tabnine.compare'),
       compare.offset,
-      compare.exact,
       compare.score,
       compare.recently_used,
       compare.kind,
