@@ -47,8 +47,12 @@ return require('packer').startup(function(use)
   use 'tpope/vim-unimpaired'
 
   -- use 'onsails/lspkind-nvim'
-  use 'neovim/nvim-lspconfig'
-  use 'williamboman/nvim-lsp-installer'
+  -- use 'williamboman/nvim-lsp-installer'
+  use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    'neovim/nvim-lspconfig',
+  }
 
   use {
     'simrat39/rust-tools.nvim',
@@ -100,13 +104,13 @@ return require('packer').startup(function(use)
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'  };
 
-  use 'nvim-treesitter/playground'
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use 'RRethy/nvim-treesitter-textsubjects'
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
-  use 'David-Kunz/treesitter-unit'
-  use 'p00f/nvim-ts-rainbow'
-  use 'RRethy/nvim-treesitter-endwise'
+  -- use 'nvim-treesitter/playground'
+  -- use 'nvim-treesitter/nvim-treesitter-textobjects'
+  -- use 'RRethy/nvim-treesitter-textsubjects'
+  -- use 'JoosepAlviste/nvim-ts-context-commentstring'
+  -- use 'David-Kunz/treesitter-unit'
+  -- use 'p00f/nvim-ts-rainbow'
+  -- use 'RRethy/nvim-treesitter-endwise'
 
   use 'windwp/nvim-autopairs'
   use 'kosayoda/nvim-lightbulb'

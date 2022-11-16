@@ -12,7 +12,7 @@ local luadev = {
     Lua = {
       runtime = {
         version = 'Lua 5.3',
-        -- command = '~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server',
+        command = '~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server',
         path = runtime_path,
       },
       diagnostics = {

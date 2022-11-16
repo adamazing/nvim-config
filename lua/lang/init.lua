@@ -1,8 +1,16 @@
 USER = vim.fn.expand('$USER')
 HOME = vim.fn.expand('$HOME')
 
-local nvim_lspinstaller = require('nvim-lsp-installer')
-nvim_lspinstaller.setup {}
+require("mason").setup {
+  ui = {
+    icons = {
+      package_installed = "✓"
+    }
+  }
+}
+require("mason-lspconfig").setup {
+  ensure_installed = { "rust_analyzer", "solargraph", "sumneko_lua" },
+}
 
 -- symbols for autocomplete
 vim.lsp.protocol.CompletionItemKind = {
@@ -33,7 +41,6 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (TypeParameter)"
 }
 
-
 -- override borders
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
@@ -42,7 +49,7 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
-_G.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+_G.capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 _G.on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end

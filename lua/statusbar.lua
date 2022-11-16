@@ -2,6 +2,17 @@ vim.cmd([[
   highlight WinSeparator guibg=None
 ]])
 
+local function diff_source()
+  local gitsigns = vim.b.gitsigns_status_dict
+  if gitsigns then
+    return {
+      added = gitsigns.added,
+      modified = gitsigns.changed,
+      removed = gitsigns.removed,
+    }
+  end
+end
+
 local function setup_status_line()
   require'lualine'.setup {
     options = {
@@ -10,7 +21,7 @@ local function setup_status_line()
       globalstatus = true,
       icons_enabled = true,
       section_separators = {left = '', right = ''},
-      theme = 'auto',
+      theme = 'gruvbox-material',
     },
     sections = {
       lualine_a = {'mode'},
@@ -26,7 +37,7 @@ local function setup_status_line()
           'branch',
           fmt = function(str)
             if str:len() > 45 then
-              return str:sub(1,20) .. '...' .. str:sub(str:len()-16,str:len())
+              return str:sub(1,15) .. '...' .. str:sub(str:len()-10,str:len())
             else
               return str
             end
@@ -40,24 +51,29 @@ local function setup_status_line()
         }
       },
       lualine_x = {
-        'diff',
-        'encoding',
-        'fileformat',
+        {
+          'diff',
+          source = diff_source
+        },
+      },
+      lualine_y = {
         {
           'filetype',
           colored = true,
           icon_only = false,
         }
-    },
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
+      },
+      lualine_z = {'location'}
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
     lualine_c = {'filename'},
     lualine_x = {'location'},
-    lualine_y = {},
+    lualine_y = {
+      'encoding',
+      'fileformat',
+    },
     lualine_z = {}
   },
   tabline = {},
@@ -65,7 +81,7 @@ local function setup_status_line()
     'fugitive',
     'quickfix',
     'nvim-tree',
-    -- 'symbols-outline'
+--    'symbols-outline'
   }
 }
 end

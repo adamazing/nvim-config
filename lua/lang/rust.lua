@@ -4,7 +4,7 @@ local rust_tools_opts = {
       print("Rust tools loaded..")
     end,
     inlay_hints = {
-      show_variable_name = true,
+      auto = true,
     },
   },
   hover_actions = {
@@ -20,14 +20,15 @@ local rust_tools_opts = {
       { "╰", "FloatBorder" },
       { "│", "FloatBorder" },
     },
-  }
+  },
+  on_attach = on_attach
 }
 
 require('rust-tools').setup(rust_tools_opts)
 
-local nvim_lsp = require'lspconfig'
-local rust_opts = {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-nvim_lsp.rust_analyzer.setup(rust_opts)
+-- local nvim_lsp = require'lspconfig'
+-- local rust_opts = {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- }
+-- nvim_lsp.rust_analyzer.setup(rust_opts)
