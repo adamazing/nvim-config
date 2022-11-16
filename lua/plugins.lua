@@ -14,10 +14,16 @@ return require('packer').startup(function(use)
   use 'tpope/vim-rails'
   use 'tpope/vim-surround'
   use 'tpope/vim-fugitive'
-  use 'tpope/vim-commentary'
   -- use 'tpope/vim-endwise'
   use 'tpope/vim-dispatch'
   use 'tpope/vim-projectionist'
+
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  }
 
   -- Color schemes
   -- Lush is required by gruvbox.nvim
