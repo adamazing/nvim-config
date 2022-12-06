@@ -62,6 +62,7 @@ nmap ("<Leader>fs", "<cmd>Telescope grep_string<cr>");
 nmap ("<Leader>ft", "<cmd>lua require'telescope.builtin'.treesitter()<cr>");
 -- Search file changes (according to git)
 nmap ("<Leader>fc", "<cmd>lua require'telescope.builtin'.git_status{}<cr>");
+nmap("<Leader>fu", "<cmd>lua require'telescope.builtin'.colorscheme{enable_preview = true}<cr>");
 
 nmap("<Leader>", ":nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><Leader>l")
 

@@ -27,8 +27,18 @@ return require('packer').startup(function(use)
 
   -- Color schemes
   -- Lush is required by gruvbox.nvim
-  use 'rktjmp/lush.nvim'
-  use 'npxbr/gruvbox.nvim'
+  -- use 'rktjmp/lush.nvim'
+  -- use 'npxbr/gruvbox.nvim'
+  use { 'ellisonleao/gruvbox.nvim',
+    config = function()
+      require('gruvbox').setup({
+        contrast = "soft",
+        dim_inactive = true,
+        transparent_mode = true,
+      })
+    end
+  }
+
   use 'szw/vim-maximizer'
 
   use 'sangdol/mintabline.vim'
@@ -110,13 +120,13 @@ return require('packer').startup(function(use)
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'  };
 
-  -- use 'nvim-treesitter/playground'
-  -- use 'nvim-treesitter/nvim-treesitter-textobjects'
-  -- use 'RRethy/nvim-treesitter-textsubjects'
-  -- use 'JoosepAlviste/nvim-ts-context-commentstring'
-  -- use 'David-Kunz/treesitter-unit'
-  -- use 'p00f/nvim-ts-rainbow'
-  -- use 'RRethy/nvim-treesitter-endwise'
+  use 'nvim-treesitter/playground'
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use 'RRethy/nvim-treesitter-textsubjects'
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use 'David-Kunz/treesitter-unit'
+  use 'p00f/nvim-ts-rainbow'
+  use 'RRethy/nvim-treesitter-endwise'
 
   use 'windwp/nvim-autopairs'
   use 'kosayoda/nvim-lightbulb'

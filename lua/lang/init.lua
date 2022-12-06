@@ -9,7 +9,7 @@ require("mason").setup {
   }
 }
 require("mason-lspconfig").setup {
-  ensure_installed = { "rust_analyzer", "solargraph", "sumneko_lua" },
+  ensure_installed = { "rust_analyzer", "solargraph", "sumneko_lua", "marksman" },
 }
 
 -- symbols for autocomplete
@@ -111,3 +111,4 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 require'lang/ruby'
 require'lang/lua'
 require'lang/rust'
+require'lang/markdown'

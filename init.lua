@@ -48,6 +48,7 @@ function _G.over_length()
 end
 --  vim.api.highlight
 
+vim.o.background = "dark"
 vim.cmd('colorscheme gruvbox')
 
 -- Add mappings for tab line e.g. use `2,` to jump to the second tab
