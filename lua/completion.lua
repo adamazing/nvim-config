@@ -41,9 +41,9 @@ local cmp_kinds = {
 local cmp = require'cmp'
 
 cmp.setup({
-  experimental= {
-    ghost_text = true,
-  },
+  -- experimental= {
+  --   ghost_text = true,
+  -- },
   formatting = {
     format = function(entry, vim_item)
       vim_item.kind = (cmp_kinds[vim_item.kind] or '')
