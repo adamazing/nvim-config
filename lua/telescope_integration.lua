@@ -27,7 +27,28 @@ telescope.setup {
         ["<c-r>"] = actions.delete_buffer
       },
     },
-    vimgrep_arguments = { 'rg', '--hidden', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case' }
+    file_ignore_patterns = {
+      ".git/",
+      "yarn.lock",
+      "Gemfile.lock",
+      ".cache",
+      "%.pdf",
+      "%.jpg",
+      "%.png",
+      "%.mp4",
+      "%.o",
+      "%.a",
+      "%.out"
+    },
+    vimgrep_arguments = { 'rg',
+                            '--hidden',
+                            '--color=never',
+                            '--no-heading',
+                            '--with-filename',
+                            '--line-number',
+                            '--column',
+                            '--smart-case'
+                        }
   },
 }
 

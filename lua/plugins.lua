@@ -25,6 +25,15 @@ return require('packer').startup(function(use)
     end
   }
 
+  use {
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
+  }
+
   -- Color schemes
   -- Lush is required by gruvbox.nvim
   -- use 'rktjmp/lush.nvim'
@@ -142,7 +151,7 @@ return require('packer').startup(function(use)
   use 'bennypowers/nvim-regexplainer'
 
   use 'aklt/plantuml-syntax'
-  use 'scrooloose/vim-slumlord'
+  -- use 'scrooloose/vim-slumlord'
 
   use 'simrat39/symbols-outline.nvim' -- Shows symbol outline of current file
 

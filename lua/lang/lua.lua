@@ -27,4 +27,4 @@ local luadev = {
     }
   }
 }
-nvim_lsp.sumneko_lua.setup(luadev)
+nvim_lsp.lua_ls.setup(luadev)

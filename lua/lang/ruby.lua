@@ -23,4 +23,16 @@ local solargraph_settings = {
     },
   },
 }
+
+-- local sorbet_settings = {
+--   cmd = {
+--     "srb", "tc", "--disable-watchman", "--lsp", "."
+--   },
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   filetypes = { "ruby" },
+--   root_dir = nvim_lsp.util.root_pattern("Gemfile", ".git"),
+-- }
+--
+-- nvim_lsp.sorbet.setup(sorbet_settings)
 nvim_lsp.solargraph.setup(solargraph_settings)

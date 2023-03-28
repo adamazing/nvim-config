@@ -9,7 +9,7 @@ require("mason").setup {
   }
 }
 require("mason-lspconfig").setup {
-  ensure_installed = { "rust_analyzer", "solargraph", "sumneko_lua", "marksman" },
+  ensure_installed = { "rust_analyzer", "solargraph", "sorbet", "lua_ls", "marksman" },
 }
 
 -- symbols for autocomplete

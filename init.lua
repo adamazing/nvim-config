@@ -57,6 +57,9 @@ for i=1,9 do
 end
 
 function _G.TrimWhitespace()
+  if vim.bo.filetype == "markdown" then
+    return
+  end
   local patterns = { [[%s/\s\+$//e]], }
   local save = vim.fn.winsaveview()
   for _, p in pairs(patterns) do
