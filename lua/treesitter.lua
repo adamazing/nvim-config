@@ -30,8 +30,18 @@ require'nvim-treesitter.configs'.setup {
 
   rainbow = {
     enable = true,
-    extended_mode = true, --Highlights other non-parentheses delimiters
-    max_file_lines = 1000,
+    query = {
+      'rainbow-parens',
+      go = 'rainbow-parens',
+      css = 'rainbow-parens',
+      html = 'rainbow-tags',
+      javascript = 'rainbow-parens-react',
+      eruby = 'rainbow-tags',
+      lua = 'rainbow-parens',
+      rust = 'rainbow-parens',
+      typescript = 'rainbow-parens',
+      yaml = 'rainbow-parens',
+    },
   },
 
   playground = {
@@ -99,7 +109,8 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-require('nvim-autopairs').setup{}
+nmap("<Leader>tpg", ":TSPlaygroundToggle<CR>")
+nmap("<Leader>ts", ":TSHighlightCapturesUnderCursor<CR>")
 
-vim.api.nvim_set_keymap('v', 'x', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
-vim.api.nvim_set_keymap('o', 'x', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
+vmap('x', ':lua require"treesitter-unit".select()<CR>')
+omap('x', ':<c-u>lua require"treesitter-unit".select()<CR>')

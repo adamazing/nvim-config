@@ -20,6 +20,10 @@ function _G.xmap(shortcut, command)
   map('x', shortcut, command)
 end
 
+function _G.omap(shortcut, command)
+  map('o', shortcut, command)
+end
+
 function _G.custom_fold_text()
   local line = vim.fn.getline(vim.v.foldstart)
   local line_count = vim.v.foldend - vim.v.foldstart + 1

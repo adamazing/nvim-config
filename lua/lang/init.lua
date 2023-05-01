@@ -9,7 +9,7 @@ require("mason").setup {
   }
 }
 require("mason-lspconfig").setup {
-  ensure_installed = { "rust_analyzer", "solargraph", "sorbet", "lua_ls", "marksman" },
+  ensure_installed = { "rust_analyzer", "solargraph", "sorbet", "lua_ls", "marksman", "gopls" },
 }
 
 -- symbols for autocomplete
@@ -94,21 +94,21 @@ end
 -- })
 
 -- -- Change diagnostic symbols in the sign column (gutter) 
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+local signs = {
+  Error = "",
+  Warn = "",
+  Hint = "",
+  Info = "" }
 
 for type, icon in pairs(signs) do
-  local hl = "LspDiagnosticsSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
--- -- Only in Nvim 0.6
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
- virtual_text = {
-   source = "if_many",  -- Or "always"
- }
-})
 
 require'lang/ruby'
 require'lang/lua'
 require'lang/rust'
 require'lang/markdown'
+require'lang/go'
+require'lang/terraform'

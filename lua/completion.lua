@@ -41,9 +41,9 @@ local cmp_kinds = {
 local cmp = require'cmp'
 
 cmp.setup({
-  -- experimental= {
-  --   ghost_text = true,
-  -- },
+  experimental= {
+    ghost_text = true,
+  },
   formatting = {
     format = function(entry, vim_item)
       vim_item.kind = (cmp_kinds[vim_item.kind] or '')
@@ -57,6 +57,7 @@ cmp.setup({
 			return vim_item
     end,
   },
+
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
@@ -97,8 +98,8 @@ cmp.setup({
     },
   },
   sources = cmp.config.sources({
-    { name = 'nvim_lsp', max_item_count = 25 }, -- limit number of items returned from lsp
-    { name = 'signature_help'},
+    { name = 'nvim_lsp', max_item_count = 5 }, -- limit number of items returned from lsp
+    { name = 'nvim_lsp_signature_help'},
     { name = 'cmp_tabnine' },
     { name = 'vsnip' },
     { name = 'buffer', keyword_length = 5 }, -- don't complete from the buffer until 5 keys have been hit
@@ -107,8 +108,8 @@ cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
-      compare.exact,
       require('cmp_tabnine.compare'),
+      compare.exact,
       compare.offset,
       compare.score,
       compare.recently_used,
@@ -119,6 +120,10 @@ cmp.setup({
     }
   }
 })
+
+-- Write a function to output all numbers between 5 and n
+
+
 cmp.setup.cmdline('/', {
   sources = {
     { name = 'buffer' }
@@ -146,3 +151,5 @@ tabnine:setup({
 		-- lua = true
 	};
 })
+-- Write a function that outputs all the numbers from 0-100
+

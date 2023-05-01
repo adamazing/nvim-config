@@ -21,6 +21,7 @@ local function setup_status_line()
       globalstatus = true,
       icons_enabled = true,
       section_separators = {left = '', right = ''},
+      -- theme = 'catppuccin',
       theme = 'gruvbox-material',
     },
     sections = {
@@ -31,7 +32,10 @@ local function setup_status_line()
           sources = { 'nvim_lsp','nvim_diagnostic' },
           sections = { 'error', 'warn', 'info', 'hint'},
           colored = true,
-          always_visible = false
+          always_visible = false,
+          on_click = function()
+            require("trouble").open('document_diagnostics')
+          end
         },
         {
           'branch',
@@ -81,7 +85,7 @@ local function setup_status_line()
     'fugitive',
     'quickfix',
     'nvim-tree',
---    'symbols-outline'
+    'symbols-outline'
   }
 }
 end

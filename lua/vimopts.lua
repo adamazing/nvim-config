@@ -3,8 +3,9 @@
 vim.g.python3_host_prog = '/opt/homebrew/bin/python3'
 vim.g.ruby_host_prog = 'asdf exec neovim-ruby-host'
 
+vim.opt.background = "dark"
 vim.opt.cmdheight = 2;
-vim.opt.colorcolumn = {150};
+-- vim.opt.colorcolumn = {150};
 vim.opt.completeopt = {"menu", "menuone", "preview", "noinsert", "noselect"}
 vim.opt.cursorline = true;
 vim.opt.cursorlineopt = { "number", "screenline" }
