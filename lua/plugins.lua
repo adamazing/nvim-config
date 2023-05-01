@@ -13,7 +13,7 @@ return require('packer').startup(function(use)
   use 'tpope/vim-speeddating'
   use 'tpope/vim-abolish'
   use 'tpope/vim-rails'
-  use 'tpope/vim-surround'
+  -- use 'tpope/vim-surround'
   use 'tpope/vim-fugitive'
   -- use 'tpope/vim-endwise'
   use 'tpope/vim-unimpaired'
@@ -21,8 +21,17 @@ return require('packer').startup(function(use)
   use 'tpope/vim-projectionist'
 
   use {
+    'numToStr/Comment.nvim',
     config = function()
       require('Comment').setup()
+    end
+  }
+
+  use {
+    'kylechui/nvim-surround',
+    tag = "*",
+    config = function()
+      require('nvim-surround').setup()
     end
   }
 
@@ -229,11 +238,6 @@ return require('packer').startup(function(use)
       require("lsp_lines").setup()
     end
   }
-
-  -- use {
-  --   'simrat39/rust-tools.nvim',
-  --   commit = 'e29fb47326093fb197f17eae5ac689979a9ce191'
-  -- }
 
   use {
     'napmn/react-extract.nvim',
