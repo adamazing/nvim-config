@@ -28,8 +28,19 @@ nmap("<Leader>[", ":vertical resize -5<CR>")
 nmap("<Leader>=", ":resize +5<CR>")
 nmap("<Leader>-", ":resize -5<CR>")
 
-nmap("[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
-nmap("]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+nmap("<Leader>l2", ":set laststatus=2<CR>")
+nmap("<Leader>l3", ":set laststatus=3<CR>")
+
+nmap('[d', ":lua vim.diagnostic.goto_prev()<CR>")
+nmap(']d', ":lua vim.diagnostic.goto_next()<CR>")
 
 -- leader followed by nothing clears search highlights
 nmap("<Leader>", ":nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><Leader>l")
+
+keymap("n", "i", function()
+  if #vim.fn.getline "." == 0 then
+    return [["_cc]]
+  else
+    return "i"
+  end
+end, { expr = true })

@@ -1,27 +1,31 @@
 ---@diagnostic disable: undefined-global
 
-local function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
+_G.keymap = vim.keymap.set
+
+function _G.map(mode, shortcut, command, options)
+  local default_opts = { noremap = true, silent = true, expr = false }
+  local keymap_opts = vim.tbl_deep_extend('force', default_opts, options or {})
+  keymap(mode, shortcut, command, keymap_opts)
 end
 
-function _G.nmap(shortcut, command)
-  map('n', shortcut, command)
+function _G.nmap(shortcut, command, options)
+  map('n', shortcut, command, options)
 end
 
-function _G.imap(shortcut, command)
-  map('i', shortcut, command)
+function _G.imap(shortcut, command, options)
+  map('i', shortcut, command, options)
 end
 
-function _G.vmap(shortcut, command)
-  map('v', shortcut, command)
+function _G.vmap(shortcut, command, options)
+  map('v', shortcut, command, options)
 end
 
-function _G.xmap(shortcut, command)
-  map('x', shortcut, command)
+function _G.xmap(shortcut, command, options)
+  map('x', shortcut, command, options)
 end
 
-function _G.omap(shortcut, command)
-  map('o', shortcut, command)
+function _G.omap(shortcut, command, options)
+  map('o', shortcut, command, options)
 end
 
 function _G.custom_fold_text()
