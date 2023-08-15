@@ -48,7 +48,8 @@ return require('packer').startup(function(use)
   }
 
   use {
-    "iamcco/markdown-preview.nvim",
+    "adamazing/markdown-preview.nvim",
+    branch = 'main',
     run = "cd app && npm install",
     setup = function()
       vim.g.mkdp_filetypes = { "markdown" }

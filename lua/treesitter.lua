@@ -1,4 +1,19 @@
 ---@diagnostic disable: undefined-global
+--
+--
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+
+parser_config.liquid = {
+  install_info = {
+    url = "~/Documents/MProjects/tree-sitter-liquid",
+    files = {"src/parser.c"},
+    branch = "main",
+    generate_requires_npm = false,
+    requires_generate_from_grammar = true,
+  },
+  filetype = "liquid",
+}
+
 require'nvim-treesitter.configs'.setup {
   -- ensure_installed can be "all" or a list of languages { "python", "javascript" }
   -- ensure_installed = {"python", "bash", "javascript", "clojure", "go"},

@@ -20,6 +20,7 @@ local solargraph_settings = {
       references = true,
       rename = true,
       symbols = true,
+      max_files = 0,
     },
   },
 }

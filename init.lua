@@ -1,8 +1,8 @@
 -- TODO:
 --  Replace instances of vim.cmd with lua api alternatives as they become available
-require'helpers' -- simple helper methods
-require'vimopts' -- basic vim/neovim options
-require'plugins'
+require('helpers') -- simple helper methods
+require('vimopts') -- basic vim/neovim options
+require('plugins')
 
 vim.g['test#strategy'] = "dispatch"
 
@@ -40,7 +40,7 @@ end
 vim.cmd([[cabbrev ff <cmd>lua fix_rebase()<CR>]])
 
 -- Mappings (general - plugin specific mappings live with their respective configs)
-require'mappings'
+require('mappings')
 
 require("completion")             -- all code completion configuration, setup, mappings
 require("treesitter")             -- all treesitter configuration (and treesitter extensions)
