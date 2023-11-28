@@ -296,6 +296,24 @@ return require('packer').startup(function(use)
       'hrsh7th/nvim-cmp'
     }
   }
+  use {
+    'zbirenbaum/copilot-cmp',
+    after = { 'copilot.lua' },
+    config = function ()
+      require('copilot_cmp').setup()
+    end
+  }
+  use {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+     config = function()
+      require('copilot').setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end
+  }
   use 'hrsh7th/nvim-cmp'
 
   use 'hrsh7th/cmp-vsnip'

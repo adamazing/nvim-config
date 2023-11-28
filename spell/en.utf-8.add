@@ -5,3 +5,8 @@ ProductAddon
 AddAdhocChargesToInvoiceWorker
 CreateChargeForProductAddon
 addon
+env
+#itignore/!
+gitignore
+AWS
+DevEx

@@ -5,7 +5,8 @@ local source_mapping = {
 	buffer = "[Buffer]",
 	nvim_lsp = "[LSP]",
 	nvim_lua = "[Lua]",
-	cmp_tabnine = "[TN]",
+	-- cmp_tabnine = "[TN]",
+  copilot = "[CP]",
 	path = "[Path]",
 }
 
@@ -34,11 +35,18 @@ local cmp_kinds = {
   Struct = " ﳤ  (Struct)",
   Event = "   (Event)",
   Operator = "   (Operator)",
-  TypeParameter = "   (TypeParameter)"
+  TypeParameter = "   (TypeParameter)",
+  CmpItemKindCopilot = "   (Copilot)"
 }
 
 -- Setup nvim-cmp.
 local cmp = require'cmp'
+
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
+end
 
 cmp.setup({
   experimental= {
@@ -100,7 +108,8 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp', max_item_count = 5 }, -- limit number of items returned from lsp
     { name = 'nvim_lsp_signature_help'},
-    { name = 'cmp_tabnine' },
+    -- { name = 'cmp_tabnine' },
+    { name = 'copilot' },
     { name = 'vsnip' },
     { name = 'buffer', keyword_length = 5 }, -- don't complete from the buffer until 5 keys have been hit
     { name = 'path' },
@@ -108,11 +117,13 @@ cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
-      require('cmp_tabnine.compare'),
+      -- require('cmp_tabnine.compare'),
+      -- require('copilot-cmp.comparators').prioritize,
       compare.exact,
       compare.offset,
       compare.score,
       compare.recently_used,
+      compare.locality,
       compare.kind,
       compare.sort_text,
       compare.length,
