@@ -36,20 +36,8 @@ return require('packer').startup(function(use)
   }
 
   use {
-    'lukas-reineke/indent-blankline.nvim',
-    config = function()
-      vim.opt.list = true
-      require('indent_blankline').setup({
-        space_char_blankline = ' ',
-        show_current_context = true,
-        show_current_context_start = true,
-      })
-    end
-  }
-
-  use {
     "adamazing/markdown-preview.nvim",
-    branch = 'main',
+    branch = 'try-out-custom-javascript',
     run = "cd app && npm install",
     setup = function()
       vim.g.mkdp_filetypes = { "markdown" }

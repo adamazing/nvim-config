@@ -106,7 +106,7 @@ cmp.setup({
     },
   },
   sources = cmp.config.sources({
-    { name = 'nvim_lsp', max_item_count = 5 }, -- limit number of items returned from lsp
+    { name = 'nvim_lsp', max_item_count = 100 }, -- limit number of items returned from lsp
     { name = 'nvim_lsp_signature_help'},
     -- { name = 'cmp_tabnine' },
     { name = 'copilot' },
@@ -150,17 +150,17 @@ cmp.setup.cmdline(':', {
   })
 })
 
-local tabnine = require('cmp_tabnine.config')
-tabnine:setup({
-	max_lines = 1000;
-	max_num_results = 25;
-	sort = true;
-	run_on_every_keystroke = true;
-	snippet_placeholder = '..';
-	ignored_file_types = { -- default is not to ignore
-		-- uncomment to ignore in lua:
-		-- lua = true
-	};
-})
--- Write a function that outputs all the numbers from 0-100
+-- local tabnine = require('cmp_tabnine.config')
+-- tabnine:setup({
+-- 	max_lines = 1000;
+-- 	max_num_results = 25;
+-- 	sort = true;
+-- 	run_on_every_keystroke = true;
+-- 	snippet_placeholder = '..';
+-- 	ignored_file_types = { -- default is not to ignore
+-- 		-- uncomment to ignore in lua:
+-- 		-- lua = true
+-- 	};
+-- })
+-- -- Write a function that outputs all the numbers from 0-100
 
