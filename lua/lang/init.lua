@@ -9,7 +9,7 @@ require("mason").setup {
   }
 }
 require("mason-lspconfig").setup {
-  ensure_installed = { "rust_analyzer", "solargraph", "sorbet", "lua_ls", "marksman", "gopls" },
+  ensure_installed = { "rust_analyzer", "solargraph", "sorbet", "lua_ls", "marksman", "gopls", "sqlls" },
 }
 
 -- symbols for autocomplete
@@ -112,3 +112,4 @@ require'lang/rust'
 require'lang/markdown'
 require'lang/go'
 require'lang/terraform'
+require'lang/sql'

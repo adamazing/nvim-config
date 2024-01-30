@@ -18,7 +18,7 @@ require'nvim-treesitter.configs'.setup {
   -- ensure_installed can be "all" or a list of languages { "python", "javascript" }
   -- ensure_installed = {"python", "bash", "javascript", "clojure", "go"},
   ensure_installed = 'all',
-  ignore_install = { 'phpdoc', 'haskell' },
+  ignore_install = { 'phpdoc', 'haskell', 'php', 'v' },
 
   endwise= {
     enable = true, -- endwise completion with TS for ruby
