@@ -35,9 +35,10 @@ return require('packer').startup(function(use)
     end
   }
 
-  use { 'jlcrochet/vim-crystal' }
-
+  -- "eso" langs (elixir,
   use { 'gleam-lang/gleam.vim' }
+  use { 'jez/vim-better-sml' }
+  use { 'jlcrochet/vim-crystal' }
 
   use {
     'kylechui/nvim-surround',
