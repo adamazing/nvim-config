@@ -14,7 +14,15 @@ return require('packer').startup(function(use)
   use 'tpope/vim-abolish'
   use 'tpope/vim-rails'
   -- use 'tpope/vim-surround'
-  use 'tpope/vim-fugitive'
+  use {
+    'tpope/vim-fugitive',
+    requires = {
+      'tpope/vim-rhubarb'
+    }
+  }
+  use {
+    'tpope/vim-rhubarb',
+  }
   -- use 'tpope/vim-endwise'
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-dispatch'
@@ -26,6 +34,10 @@ return require('packer').startup(function(use)
       require('Comment').setup()
     end
   }
+
+  use { 'jlcrochet/vim-crystal' }
+
+  use { 'gleam-lang/gleam.vim' }
 
   use {
     'kylechui/nvim-surround',
@@ -115,8 +127,20 @@ return require('packer').startup(function(use)
 
   use { 'nvim-lualine/lualine.nvim',
     requires = {
-      'nvim-web-devicons',
+      'nvim-tree/nvim-web-devicons',
+      opt = true
     }
+  }
+
+  use {
+    'AndreM222/copilot-lualine',
+    requires = {
+      'nvim-lualine/lualine.nvim',
+      'zbirenbaum/copilot.lua',
+    },
+    after = {
+      'copilot.lua',
+    },
   }
 
   use { 'nvim-tree/nvim-web-devicons',
@@ -379,6 +403,7 @@ return require('packer').startup(function(use)
       require'regexplainer'.setup {
         -- automatically show the explainer when the cursor enters a regexp
         auto = true,
+        display = 'popup',
         filetypes = {
           'html',
           'js',
@@ -387,11 +412,17 @@ return require('packer').startup(function(use)
           'ruby',
           'rust',
         },
+        mappings = {
+          toggle = 'gR'
+        },
         popup = {
           border = {
             padding = { 1, 2},
             style="shadow"
           },
+          position = 5,
+          relative = 'cursor',
+          size = { width = 0.5, height = 0.5 }
         },
         narrative = {
           separator = function(component)
@@ -414,8 +445,12 @@ return require('packer').startup(function(use)
 
   use 'aklt/plantuml-syntax'
 
-  use 'simrat39/symbols-outline.nvim' -- Shows symbol outline of current file
-
+  use {
+    'simrat39/symbols-outline.nvim', -- Shows symbol outline of current file
+    config = function()
+      require('symbols-outline').setup()
+    end
+  }
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then

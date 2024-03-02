@@ -8,7 +8,6 @@ nmap("<C-l>", "<C-w>l");
 
 -- yank visual selection to tmux clipboard
 vmap("<Leader>tc", "y<cr>:call system('tmux load-buffer -', @0)<cr>")
-
 -- paste from tmux clipboard
 nmap("<leader>tp", ':let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;')
 

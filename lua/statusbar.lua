@@ -14,7 +14,7 @@ local function diff_source()
 end
 
 local function setup_status_line()
-  require'lualine'.setup {
+  require('lualine').setup {
     options = {
       component_separators = {left = '', right = ''},
       disabled_filetypes = {},
@@ -30,9 +30,16 @@ local function setup_status_line()
         {
           'diagnostics',
           sources = { 'nvim_lsp','nvim_diagnostic' },
-          sections = { 'error', 'warn', 'info', 'hint'},
+          sections = { 'error', 'warn', 'info', 'hint' },
           colored = true,
           always_visible = false,
+          diagnostics_color = {
+            error = DiagnosticError,
+            warn  = DiagnosticWarn,
+            info  = DiagnosticInfo,
+            hint  = DiagnosticHint,
+          },
+          symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '},
           on_click = function()
             require("trouble").open('document_diagnostics')
           end
@@ -62,6 +69,9 @@ local function setup_status_line()
       },
       lualine_y = {
         {
+          'copilot',
+        },
+        {
           'filetype',
           colored = true,
           icon_only = false,
@@ -83,9 +93,11 @@ local function setup_status_line()
   tabline = {},
   extensions = {
     'fugitive',
-    'quickfix',
+    'mason',
     'nvim-tree',
-    'symbols-outline'
+    'quickfix',
+    'symbols-outline',
+    'trouble'
   }
 }
 end

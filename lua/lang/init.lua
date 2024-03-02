@@ -1,6 +1,8 @@
 USER = vim.fn.expand('$USER')
 HOME = vim.fn.expand('$HOME')
 
+local nvim_lsp = require('lspconfig')
+
 require("mason").setup {
   ui = {
     icons = {
@@ -8,17 +10,54 @@ require("mason").setup {
     }
   }
 }
+
+local handlers = {
+  function (server_name)
+    require("lspconfig")[server_name].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end,
+  ["solargraph"] = function ()
+    require'lang/ruby'
+  end,
+  ["lua_ls"] = function ()
+    require'lang/lua'
+  end,
+  ["biome"] = function ()
+    require("lspconfig")['biome'].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      root_dir = nvim_lsp.util.root_pattern('biome.json', 'package.json', 'tsconfig.json', 'jsconfig.json', '.git'),
+    }
+  end,
+  ["fsautocomplete"] = function ()
+    require("lspconfig")['fsautocomplete'].setup {
+      cmd = { 'dotnet', 'run', 'fsautocomplete', '--adaptive-lsp-server-enabled', '--verbose' },
+      on_attach = on_attach,
+      capabilities = capabilities,
+      root_dir = nvim_lsp.util.root_pattern('.git', '*.fsproj'),
+    }
+  end
+}
+
 require("mason-lspconfig").setup {
   ensure_installed = {
+    "biome",
+    "fsautocomplete",
     "gopls",
     "lua_ls",
     "marksman",
+    "nimls",
     "r_language_server",
     "rust_analyzer",
     "solargraph",
-    "sorbet",
+    -- "sorbet",
     "sqlls",
   },
+  automatic_installation = true,
+  automatic_server_setup = true,
+  handlers = handlers,
 }
 
 -- symbols for autocomplete
@@ -113,13 +152,3 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
-
-
-require'lang/go'
-require'lang/lua'
-require'lang/markdown'
-require'lang/r'
-require'lang/ruby'
-require'lang/rust'
-require'lang/sql'
-require'lang/terraform'
