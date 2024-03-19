@@ -39,6 +39,35 @@ return require('packer').startup(function(use)
 
   use { 'gleam-lang/gleam.vim' }
 
+  use { 'scalameta/nvim-metals',
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    ft = { "scala", "sbt", "java" },
+    opts = function()
+      require 'mappings'
+      local metals_config = require("metals").bare_config()
+      metals_config.on_attach = on_attach
+      metals_config.settings = {
+        showImplicitArguments = true
+      }
+      metals_config.init_options.statusBarProvider = "on"
+      metals_config.capabilities = require("comp_nvim_lsp").default_capabilities()
+
+      return metals_config
+    end,
+    config = function(self, metals_config)
+      local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = self.ft,
+        callback = function()
+          require("metals").initialize_or_attach(metals_config)
+        end,
+        group = nvim_metals_group,
+      })
+    end
+  }
+
   use {
     'kylechui/nvim-surround',
     tag = "*",
@@ -107,21 +136,21 @@ return require('packer').startup(function(use)
   -- DAP Setup
   -- use 'Pocco81/DAPInstall.nvim'
   -- use 'mfussenegger/nvim-dap'
-  use { 'puremourning/vimspector',
-    config = function ()
-      vim.g.vimspector_enable_mappings = 'HUMAN'
-      vim.g.vimspector_install_gadgets = { 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode-node-debug1'}
-
-      -- Debug Bindings
-      nmap("<Leader>dd", ":call vimspector#Launch()<CR>")
-      nmap("<Leader>dr", ":VimspectorReset<CR>")
-      nmap("<Leader>de", ":VimspectorEval")
-      nmap("<Leader>dw", ":VimspectorWatch")
-      nmap("<Leader>do", ":VimspectorShowOutput")
-      nmap("<Leader>di", "<Plug>VimspectorBalloonEval")
-      xmap("<Leader>di", "<Plug>VimspectorBalloonEval")
-    end
-  }
+  -- use { 'puremourning/vimspector',
+  --   config = function ()
+  --     vim.g.vimspector_enable_mappings = 'HUMAN'
+  --     vim.g.vimspector_install_gadgets = { 'debugpy', 'vscode-go', 'CodeLLDB', 'vscode-node-debug1'}
+  --
+  --     -- Debug Bindings
+  --     nmap("<Leader>dd", ":call vimspector#Launch()<CR>")
+  --     nmap("<Leader>dr", ":VimspectorReset<CR>")
+  --     nmap("<Leader>de", ":VimspectorEval")
+  --     nmap("<Leader>dw", ":VimspectorWatch")
+  --     nmap("<Leader>do", ":VimspectorShowOutput")
+  --     nmap("<Leader>di", "<Plug>VimspectorBalloonEval")
+  --     xmap("<Leader>di", "<Plug>VimspectorBalloonEval")
+  --   end
+  -- }
 
   use 'lewis6991/gitsigns.nvim'
 
