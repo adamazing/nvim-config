@@ -18,11 +18,11 @@ local handlers = {
       capabilities = capabilities,
     }
   end,
-  ["solargraph"] = function ()
+  -- ["solargraph"] = function ()
+  --   require'lang/ruby'
+  -- end,
+  ["sorbet"] = function ()
     require'lang/ruby'
-  end,
-  ["lua_ls"] = function ()
-    require'lang/lua'
   end,
   ["biome"] = function ()
     require("lspconfig")['biome'].setup {
@@ -47,13 +47,12 @@ require("mason-lspconfig").setup {
     "fsautocomplete",
     "gopls",
     "hls",
-    "lua_ls",
     "marksman",
     "nimls",
     "r_language_server",
     "rust_analyzer",
-    "solargraph",
-    -- "sorbet",
+    -- "solargraph",
+    "sorbet",
     "sqlls",
   },
   automatic_installation = true,

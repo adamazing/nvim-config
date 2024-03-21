@@ -48,3 +48,4 @@ require("lang")                   -- language specific configurations and LSP se
 require("statusbar")              -- status bar setup and configuration
 require("telescope_integration")  -- telescope setup and extension config
 require("gitsigns_config")
+require("presentation")

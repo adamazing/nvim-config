@@ -28,12 +28,24 @@ function _G.omap(shortcut, command, options)
   map('o', shortcut, command, options)
 end
 
+function _G.maprm(modes, lhs)
+  vim.keymap.del(modes, lhs)
+end
+
 function _G.custom_fold_text()
   local line = vim.fn.getline(vim.v.foldstart)
   local line_count = vim.v.foldend - vim.v.foldstart + 1
   local line_text = "("..vim.v.foldstart.."-"..vim.v.foldend..")"
 
   return "     "..line_count.." lines "..line_text.." -[ "..line
+end
+
+function _G.toggle(key)
+  vim.g[key] = not vim.g[key]
+end
+
+function _G.toggle_opt(option)
+  vim.opt[option] = not vim.opt[option]
 end
 
 function _G.contains(tab, val)

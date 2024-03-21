@@ -1,3 +1,5 @@
+require('helpers')
+
 -- Mappings that don't relate to any particular plugin.
 -- Plugins with their own configuration file have mappings there.
 -- Plugins with simpler setups have mappings in plugins.lua
@@ -21,6 +23,13 @@ nmap("<Leader>fn", ":let @+=expand('%').':'.line('.')<CR>")
 imap("jk","<Esc>")
 vmap("jk","<Esc>")
 -- imap("<Leader>;",";")
+
+-- Figlet
+nmap("<Leader>t1", ":.!figlet -s -w 200 -f pebbles<CR>")
+nmap("<Leader>t2", ":.!figlet -s -w 200 -f pebbles<CR>")
+nmap("<Leader>t3", ":.!figlet -s -w 400 -f pebbles<CR>")
+
+vmap("<Leader>t1", ":'<,'>!toilet -f term -F border<CR>")
 
 nmap("<Leader>]", ":vertical resize +5<CR>")
 nmap("<Leader>[", ":vertical resize -5<CR>")
