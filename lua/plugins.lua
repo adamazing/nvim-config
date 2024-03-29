@@ -271,25 +271,6 @@ return require('packer').startup(function(use)
   }
 
   use {
-    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    requires = {
-      'neovim/nvim-lspconfig',
-    },
-    config = function()
-      vim.diagnostic.config({ virtual_text = false })
-      require("lsp_lines").setup()
-    end
-  }
-
-  use {
-    'napmn/react-extract.nvim',
-    ft={'typescript', 'javascript'},
-    config = function()
-      require("react-extract").setup()
-    end
-  }
-
-  use {
     'abecodes/tabout.nvim',
     config = function()
       require('tabout').setup {
@@ -331,13 +312,6 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use {
-    'tzachar/cmp-tabnine',
-    run = './install.sh',
-    requires = {
-      'hrsh7th/nvim-cmp'
-    }
-  }
-  use {
     'zbirenbaum/copilot-cmp',
     after = { 'copilot.lua' },
     config = function ()
@@ -356,11 +330,29 @@ return require('packer').startup(function(use)
     end
   }
   use 'hrsh7th/nvim-cmp'
-
   use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/vim-vsnip'
 
-  use 'mechatroner/rainbow_csv'
+  use {
+    'cameron-wags/rainbow_csv.nvim',
+    config = function()
+        require 'rainbow_csv'.setup()
+    end,
+    -- optional lazy-loading below
+    module = {
+        'rainbow_csv',
+        'rainbow_csv.fns'
+    },
+    ft = {
+        'csv',
+        'tsv',
+        'csv_semicolon',
+        'csv_whitespace',
+        'csv_pipe',
+        'rfc_csv',
+        'rfc_semicolon'
+    }
+  }
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'  };
 
@@ -403,9 +395,9 @@ return require('packer').startup(function(use)
     }
   }
 
-  -- use {'windwp/nvim-autopairs',
-  --   config = function() require('nvim-autopairs').setup({ }) end
-  -- }
+  use {'windwp/nvim-autopairs',
+    config = function() require('nvim-autopairs').setup({ }) end
+  }
 
   use { 'kosayoda/nvim-lightbulb',
     config = function ()
@@ -425,52 +417,6 @@ return require('packer').startup(function(use)
   }
   use 'nvim-telescope/telescope-ui-select.nvim'
   use 'nvim-telescope/telescope-symbols.nvim'
-
-  use {'bennypowers/nvim-regexplainer',
-    config = function ()
-      -- not shown: defaults
-      require'regexplainer'.setup {
-        -- automatically show the explainer when the cursor enters a regexp
-        auto = true,
-        display = 'popup',
-        filetypes = {
-          'html',
-          'js',
-          'jsx',
-          'python',
-          'ruby',
-          'rust',
-        },
-        mappings = {
-          toggle = 'gR'
-        },
-        popup = {
-          border = {
-            padding = { 1, 2},
-            style="shadow"
-          },
-          position = 5,
-          relative = 'cursor',
-          size = { width = 0.5, height = 0.5 }
-        },
-        narrative = {
-          separator = function(component)
-            local sep = '\n ';
-            if component.depth > 0 then
-              for _ = 1, component.depth do
-                sep = sep .. '> '
-              end
-            end
-            return sep
-          end
-        },
-      }
-    end,
-    requires = {
-      'nvim-treesitter/nvim-treesitter',
-      'MunifTanjim/nui.nvim',
-    }
-  }
 
   use 'aklt/plantuml-syntax'
 

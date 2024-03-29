@@ -37,6 +37,13 @@ function _G.fix_rebase()
   ]])
 end
 
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  augroup end
+]])
+
 vim.cmd([[cabbrev ff <cmd>lua fix_rebase()<CR>]])
 
 -- Mappings (general - plugin specific mappings live with their respective configs)

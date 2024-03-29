@@ -5,7 +5,6 @@ local source_mapping = {
 	buffer = "[Buffer]",
 	nvim_lsp = "[LSP]",
 	nvim_lua = "[Lua]",
-	-- cmp_tabnine = "[TN]",
   copilot = "[CP]",
 	path = "[Path]",
 }
@@ -56,11 +55,11 @@ cmp.setup({
     format = function(entry, vim_item)
       vim_item.kind = (cmp_kinds[vim_item.kind] or '')
 			local menu = source_mapping[entry.source.name]
-			if entry.source.name == 'cmp_tabnine' then
-				if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-					menu = entry.completion_item.data.detail .. ' ' .. menu
-				end
-			end
+			-- if entry.source.name == 'cmp_tabnine' then
+			-- 	if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+			-- 		menu = entry.completion_item.data.detail .. ' ' .. menu
+			-- 	end
+			-- end
 			vim_item.menu = menu
 			return vim_item
     end,
@@ -108,7 +107,6 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp', max_item_count = 100 }, -- limit number of items returned from lsp
     { name = 'nvim_lsp_signature_help'},
-    -- { name = 'cmp_tabnine' },
     { name = 'copilot' },
     { name = 'vsnip' },
     { name = 'buffer', keyword_length = 5 }, -- don't complete from the buffer until 5 keys have been hit
@@ -117,7 +115,6 @@ cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
-      -- require('cmp_tabnine.compare'),
       -- require('copilot-cmp.comparators').prioritize,
       compare.exact,
       compare.offset,
@@ -131,9 +128,6 @@ cmp.setup({
     }
   }
 })
-
--- Write a function to output all numbers between 5 and n
-
 
 cmp.setup.cmdline('/', {
   sources = {
@@ -149,18 +143,3 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
-
--- local tabnine = require('cmp_tabnine.config')
--- tabnine:setup({
--- 	max_lines = 1000;
--- 	max_num_results = 25;
--- 	sort = true;
--- 	run_on_every_keystroke = true;
--- 	snippet_placeholder = '..';
--- 	ignored_file_types = { -- default is not to ignore
--- 		-- uncomment to ignore in lua:
--- 		-- lua = true
--- 	};
--- })
--- -- Write a function that outputs all the numbers from 0-100
-

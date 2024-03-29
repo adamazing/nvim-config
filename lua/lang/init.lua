@@ -1,8 +1,6 @@
 USER = vim.fn.expand('$USER')
 HOME = vim.fn.expand('$HOME')
 
-local nvim_lsp = require('lspconfig')
-
 require("mason").setup {
   ui = {
     icons = {
@@ -18,17 +16,21 @@ local handlers = {
       capabilities = capabilities,
     }
   end,
-  -- ["solargraph"] = function ()
-  --   require'lang/ruby'
-  -- end,
-  ["sorbet"] = function ()
+  ["solargraph"] = function ()
     require'lang/ruby'
+  end,
+  ["gopls"] = function ()
+    require("lspconfig")['gopls'].setup {
+      cmd = { "gopls", "serve" },
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
   end,
   ["biome"] = function ()
     require("lspconfig")['biome'].setup {
       on_attach = on_attach,
       capabilities = capabilities,
-      root_dir = nvim_lsp.util.root_pattern('biome.json', 'package.json', 'tsconfig.json', 'jsconfig.json', '.git'),
+      root_dir = require("lspconfig").util.root_pattern('biome.json', 'package.json', 'tsconfig.json', 'jsconfig.json', '.git'),
     }
   end,
   ["fsautocomplete"] = function ()
@@ -36,7 +38,7 @@ local handlers = {
       cmd = { 'dotnet', 'run', 'fsautocomplete', '--adaptive-lsp-server-enabled', '--verbose' },
       on_attach = on_attach,
       capabilities = capabilities,
-      root_dir = nvim_lsp.util.root_pattern('.git', '*.fsproj'),
+      root_dir = require("lspconfig").util.root_pattern('.git', '*.fsproj'),
     }
   end
 }
@@ -51,8 +53,7 @@ require("mason-lspconfig").setup {
     "nimls",
     "r_language_server",
     "rust_analyzer",
-    -- "solargraph",
-    "sorbet",
+    "solargraph",
     "sqlls",
   },
   automatic_installation = true,
@@ -99,15 +100,15 @@ end
 
 _G.capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- -- Customizing how diagnostics are displayed
--- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
---   virtual_text = true,
---   signs = true,
---   underline = true,
---   update_in_insert = false,
--- })
+-- Customizing how diagnostics are displayed
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+})
 
--- -- Change diagnostic symbols in the sign column (gutter) 
+-- Change diagnostic symbols in the sign column (gutter) 
 local signs = {
   Error = "",
   Warn = "",
