@@ -1,5 +1,5 @@
 local actions = require("telescope.actions")
-local trouble = require("trouble.providers.telescope")
+local trouble = require("trouble.sources.telescope")
 local telescope = require("telescope")
 
 telescope.setup {
@@ -19,12 +19,12 @@ telescope.setup {
     mappings = {
       i = {
         ["<c-h>"] = "which_key",
-        ["<c-t>"] = trouble.open_with_trouble,
+        ["<c-t>"] = trouble.open,
         ["<c-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
         ["<c-r>"] = actions.delete_buffer
       },
       n = {
-        ["<c-t>"] = trouble.open_with_trouble,
+        ["<c-t>"] = trouble.open,
         ["<c-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
         ["<c-r>"] = actions.delete_buffer
       },

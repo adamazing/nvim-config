@@ -40,6 +40,12 @@ local handlers = {
       capabilities = capabilities,
       root_dir = require("lspconfig").util.root_pattern('.git', '*.fsproj'),
     }
+  end,
+  ["ballerina"] = function ()
+    require("lspconfig")['ballerina'].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
   end
 }
 
