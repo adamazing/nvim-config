@@ -37,6 +37,8 @@ return require('packer').startup(function(use)
 
   use { 'jlcrochet/vim-crystal' }
 
+  use { 'reasonml-editor/vim-reason-plus' }
+
   use { 'gleam-lang/gleam.vim' }
 
   use { 'scalameta/nvim-metals',
