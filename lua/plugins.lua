@@ -35,6 +35,8 @@ return require('packer').startup(function(use)
     end
   }
 
+  use { 'b0o/schemastore.nvim' }
+
   use { 'jlcrochet/vim-crystal' }
 
   use { 'reasonml-editor/vim-reason-plus' }

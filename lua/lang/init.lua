@@ -46,6 +46,31 @@ local handlers = {
       on_attach = on_attach,
       capabilities = capabilities,
     }
+  end,
+  ["yamlls"] = function ()
+    require("lspconfig")['yamlls'].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      settings = {
+        schemaStore = {
+          enable = false,
+          url = "",
+        },
+        schemas = require'schemastore'.yaml.schemas(),
+      }
+    }
+  end,
+  ["jsonls"] = function ()
+    require("lspconfig")['jsonls'].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      settings = {
+        json = {
+          schemas = require'schemastore'.json.schemas(),
+          validate = { enable = true },
+        },
+      }
+    }
   end
 }
 
