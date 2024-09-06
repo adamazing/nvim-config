@@ -269,17 +269,15 @@ return require('packer').startup(function(use)
   }
 
   use {
-    '/Users/adam/Documents/MProjects/neovim-plugins/nvim-lspconfig',
-    as = 'nvim-lspconfig'
+    'neovim/nvim-lspconfig',
   }
+
   use {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    requires = {
+    after = {
       "nvim-lspconfig"
     },
-    -- '/Users/adam/Documents/MProjects/neovim-plugins/nvim-lspconfig'
-    -- 'neovim/nvim-lspconfig',
   }
 
   use {
